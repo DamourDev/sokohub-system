@@ -1,0 +1,77 @@
+# Python
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller/cx_Freeze/Nuitka
+*.spec
+build/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-file.txt
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+htmlcov/
+.hypothesis/
+.pytest_cache/
+
+# Environments (Excluding 'envi')
+.env
+.venv
+envi/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Project-specific files (Django)
+# Excluded files are commented out or included below
+*.log
+*.pot
+*.mo
+*.js.map
+*.css.map
+local_settings.py
+*.sqlite
+
+# Security/Database/Uploads (EXCLUDED FILES)
+# These files are explicitly added below to be ignored:
+db.sqlite3
+/media/
+/static_root/
+
+# IDE/Tooling files
+.idea/
+.vscode/
+*.swp
+*.bak
