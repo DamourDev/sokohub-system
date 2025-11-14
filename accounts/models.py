@@ -12,11 +12,11 @@ class CustomUser(AbstractUser):
         max_length=10, 
         choices=USER_TYPE_CHOICES, 
         default='customer',
-        verbose_name='User Type'
+        verbose_name='User Type' 
     )
-    phone = models.CharField(max_length=15, blank=True, null=True)
-    location = models.CharField(max_length=255, blank=True, null=True)
+    phone = models.PositiveIntegerField(null=True, blank=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
 
    
     def __str__(self):
-        return f"{self.username} ({self.get_user_type_display()})"
+        return f"{self.username} is ({self.user_type})"

@@ -1,77 +1,76 @@
-# Python
-# Byte-compiled / optimized / DLL files
+# -------------------------
+# Python compiled / cache files
+# -------------------------
 __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
+# Project-specific pycache (like sokohub/__pycache__)
+sokohub/__pycache__/
+accounts/__pycache__/
+products/__pycache__/
+orders/__pycache__/
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# PyInstaller/cx_Freeze/Nuitka
-*.spec
-build/
-
-# Installer logs
-pip-log.txt
-pip-delete-this-file.txt
-
-# Unit test / coverage reports
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-htmlcov/
-.hypothesis/
-.pytest_cache/
-
-# Environments (Excluding 'envi')
-.env
-.venv
-envi/
+# -------------------------
+# Virtual environment
+# -------------------------
+env/
 venv/
 ENV/
-env.bak/
-venv.bak/
+*.env
 
-# Project-specific files (Django)
-# Excluded files are commented out or included below
+# -------------------------
+# Django local files
+# -------------------------
+*.sqlite3
 *.log
 *.pot
-*.mo
-*.js.map
-*.css.map
-local_settings.py
-*.sqlite
 
-# Security/Database/Uploads (EXCLUDED FILES)
-# These files are explicitly added below to be ignored:
-db.sqlite3
-/media/
-/static_root/
+# -------------------------
+# Django migrations
+# -------------------------
+*/migrations/*.pyc
+*/migrations/*.py~
+*/migrations/__pycache__/
+# Keep __init__.py in migrations
+!*/migrations/__init__.py
 
-# IDE/Tooling files
-.idea/
+# -------------------------
+# Media and static files
+# -------------------------
+media/
+staticfiles/
+# /static/ can stay tracked for dev
+
+# -------------------------
+# IDEs and editors
+# -------------------------
 .vscode/
-*.swp
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# -------------------------
+# OS files
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Backup / temporary files
+# -------------------------
 *.bak
+*.swp
+*.tmp
+
+# -------------------------
+# Testing / coverage
+# -------------------------
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/

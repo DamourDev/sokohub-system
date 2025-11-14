@@ -1,9 +1,10 @@
-from django.db import models
+from django.db import models 
 from accounts.models import CustomUser
 from products.models import Product
 
 class Order(models.Model):
     ORDER_STATUS_CHOICES = (
+        ('waiting for your order', 'Waiting for Your Order'),
         ('pending', 'Pending'),
         ('processing', 'Processing'),
         ('shipped', 'Shipped'),
@@ -15,21 +16,20 @@ class Order(models.Model):
         CustomUser, 
         on_delete=models.SET_NULL, 
         null=True, 
-        limit_choices_to={'user_type': 'customer'},
         related_name='orders'
     )
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     status = models.CharField(
-        max_length=20, 
+        max_length=25, 
         choices=ORDER_STATUS_CHOICES, 
-        default='pending'
+        default='waiting for your order'
     )
     delivery_address = models.CharField(max_length=500)
-    phone = models.CharField(max_length=15)
+    phone = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Order #{self.id} - {self.customer.username} ({self.get_status_display()})"
+        return f"Order #{self.id} placed by {self.customer.username} is {self.status}"
 
 
 class OrderItem(models.Model):
@@ -42,7 +42,7 @@ class OrderItem(models.Model):
         Product, 
         on_delete=models.PROTECT 
     )
-    quantity = models.PositiveIntegerField(default=1)
+    quantity = models.DecimalField(max_digits=5, decimal_places=2, default=1)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):

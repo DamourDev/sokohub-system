@@ -3,6 +3,8 @@ from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'user_type', 'phone', 'location', 'is_staff')
+    list_display = ('id','username', 'email', 'user_type', 'phone', 'location')
+    list_filter = ('user_type',)
+    search_fields = ('username', 'email')
     
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(CustomUser, CustomUserAdmin) 
