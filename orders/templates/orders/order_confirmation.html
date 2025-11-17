@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="text-center mb-4">
+        <h2>Order Placed Successfully!</h2>
+        <p class="text-success">Thank you for your purchase.</p>
+    </div>
+
+    <!-- Order Number -->
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h4>Order Number: <strong>{{ order.order_number }}</strong></h4>
+        </div>
+    </div>
+
+    <!-- Order Details -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5>Order Details</h5>
+            <p><strong>Product:</strong> {{ items.product.name }}</p>
+            <p><strong>Quantity:</strong> {{ items.quantity }}</p>
+            <p><strong>Unit Price:</strong> {{ items.product.price }} RWF</p>
+            <p><strong>Total:</strong> {{ order.total }} RWF</p>
+            <p><strong>Status:</strong> {{ order.status }}</p>
+        </div>
+    </div>
+
+    <!-- Delivery Info -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>Delivery Information</h5>
+            <p><strong>Delivery Address:</strong> {{ order.delivery_address }}</p>
+            <p><strong>Phone:</strong> {{ order.phone }}</p>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a href="{% url 'customer_orders' %}" class="btn btn-primary">View My Orders</a>
+        <a href="{% url 'products_list' %}" class="btn btn-secondary">Continue Shopping</a>
+        
+    </div>
+    <p><strong>Thank you for shopping with us!</strong></p> 
+
+</div>
+{% endblock %}

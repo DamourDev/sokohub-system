@@ -19,7 +19,7 @@ def register(request):
             if user.user_type == 'vendor':
                 return redirect('vendor_dashboard')  # Redirect to vendor dashboard
             else:
-                return redirect('product_list')  # Redirect to product listing for customers
+                return redirect('products_list')  # Redirect to product listing for customers
         
         else:
             messages.error(request, "Please correct the errors below.")
@@ -35,7 +35,7 @@ def login_view(request):
         if request.user.user_type == 'vendor':
             return redirect('vendor_dashboard')
         else:
-            return redirect('product_list')
+            return redirect('products_list')
         
     form = LoginForm(request.POST or None) 
 
@@ -62,7 +62,7 @@ def login_view(request):
                 if user.user_type == 'vendor':
                     return redirect('vendor_dashboard')
                 else:
-                    return redirect('product_list')
+                    return redirect('products_list')
             else:
                 # Form validation already handles this, but extra safety
                 messages.error(request, "Invalid username or password.")

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Vendor Name Header -->
+    <h2 class="mb-4">{{ vendor.username }}</h2>
+
+    <!-- Check if there are products -->
+    {% if products %}
+    <div class="row">
+        {% for product in products %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                <!-- Product Image -->
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" style="height:200px; object-fit:contain;" alt="{{ product.name }}">
+                {% else %}
+                    <img src="{% static 'images/placeholder.png' %}" class="card-img-top" style="height:200px; object-fit:contain;" alt="No Image">
+                {% endif %}
+
+                <div class="card-body d-flex flex-column">
+                    <!-- Product Name -->
+                    <h5 class="card-title">{{ product.name }}</h5>
+
+                    <!-- Product Price -->
+                    <p class="card-text">${{ product.price }}</p>
+
+                    <!-- Stock Status -->
+                    {% if product.stock > 0 %}
+                        <span class="badge bg-success mb-2">In Stock</span>
+                    {% else %}
+                        <span class="badge bg-danger mb-2">Out of Stock</span>
+                    {% endif %}
+
+                    <!-- View Details Button -->
+                    <a href="{% url 'product_detail' product.pk %}" class="btn btn-outline-primary mt-auto">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p class="text-muted">This vendor has no active products at the moment.</p>
+    {% endif %}
+
+</div>
+{% endblock %}
