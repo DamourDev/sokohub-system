@@ -40,21 +40,25 @@ def checkout(request, pk):
 
             return redirect('order_confirmation', order_id=order.id)
         
-    elif request.method == 'GET':
-        form = CheckoutForm()
+    # elif request.method == 'GET':
+    #     form = CheckoutForm()
 
     else:
         form = CheckoutForm(initial={
-            'delivery_address': request.user.delivery_address,
+            'delivery_address': request.user.location,
             'phone': request.user.phone
         })
 
     context = {
         'form': form,
         'product': product,
-        'quantity_range': quantity_range
+        'quantity_range': quantity_range,
+        'quantity': quantity,
+        'total': product.price * quantity
         
     }
+
+    
 
     return render(request, 'orders/checkout.html', context)
     

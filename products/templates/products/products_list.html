@@ -7,12 +7,13 @@
 
     <!-- Sorting options -->
     <div class="mb-3">
-        <form method="get" class="d-flex align-items-center">
+        <form method="POST" class="d-flex align-items-center">
+            {% csrf_token %}
             <label for="sort" class="me-2">Sort by:</label>
             <select name="sort" id="sort" class="form-select w-auto" onchange="this.form.submit()">
                 <option value="newest" {% if sort_option == 'newest' %}selected{% endif %}>Newest First</option>
-                <option value="price_low" {% if sort_option == 'price_low' %}selected{% endif %}>Price: Low to High</option>
-                <option value="price_high" {% if sort_option == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                <option value="price_low_to_high" {% if sort_option == 'price_low_to_high' %}selected{% endif %}>Price: Low to High</option>
+                <option value="price_high_to_low" {% if sort_option == 'price_high_to_low' %}selected{% endif %}>Price: High to Low</option>
             </select>
         </form>
     </div>
@@ -30,7 +31,7 @@
                         {% endif %}
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text fw-bold">${{ product.price }}</p>
+                            <p class="card-text fw-bold">{{ product.price }} Frw</p>
                             <p class="card-text text-muted">Vendor: {{ product.vendor.username }}</p>
                             {% if product.stock > 0 %}
                                 <span class="badge bg-success mb-2">In Stock: {{ product.stock }}</span>

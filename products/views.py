@@ -6,8 +6,10 @@ from orders.models import Order
 from .forms import ProductForm
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # Create your views here.
 
 @login_required
@@ -71,7 +73,7 @@ def products_list(request):
     
     products =  Product.objects.filter(status='active')
 
-    sort_option = request.GET.get('sort', 'newest')
+    sort_option = request.POST.get('sort', 'newest')
 
     if sort_option == 'price_low_to_high':
         products = products.order_by('price')

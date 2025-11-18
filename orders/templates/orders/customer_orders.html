@@ -20,8 +20,8 @@
                 {% for order in orders %}
                 <tr>
                     <td>
-                        <a href="{% url 'order_confirmation' order.order_id %}">
-                            {{ order.order_id }}
+                        <a href="{% url 'order_confirmation' order.id %}">
+                            {{ order.id }}
                         </a>
                     </td>
 

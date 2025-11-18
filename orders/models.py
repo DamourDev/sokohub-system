@@ -2,12 +2,10 @@ from django.db import models
 from accounts.models import CustomUser
 from products.models import Product
 
-class Order(models.Model):
+class Order(models.Model): 
     ORDER_STATUS_CHOICES = (
-        ('waiting for your order', 'Waiting for Your Order'),
         ('pending', 'Pending'),
         ('processing', 'Processing'),
-        ('shipped', 'Shipped'),
         ('delivered', 'Delivered'),
         ('cancelled', 'Cancelled'),
     )
@@ -22,7 +20,7 @@ class Order(models.Model):
     status = models.CharField(
         max_length=25, 
         choices=ORDER_STATUS_CHOICES, 
-        default='waiting for your order'
+        default='pending'
     )
     delivery_address = models.CharField(max_length=500)
     phone = models.PositiveIntegerField()

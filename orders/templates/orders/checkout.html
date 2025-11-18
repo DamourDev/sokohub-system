@@ -22,7 +22,7 @@
             <p><strong>Product:</strong> {{ product.name }}</p>
             <p><strong>Unit Price:</strong> {{ product.price }} RWF</p>
             <p><strong>Quantity:</strong> {{ quantity }}</p>
-            <p><strong>Total:</strong> {{product.price}} RWF</p>
+            <p><strong>Total:</strong> {{total}} RWF</p>
         </div>
     </div>
 
@@ -30,6 +30,7 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
+        
 
         <button type="submit" class="btn btn-primary mt-3">Place Order</button>
     </form>

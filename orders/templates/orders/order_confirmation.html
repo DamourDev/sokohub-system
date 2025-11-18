@@ -19,9 +19,12 @@
     <div class="card mb-3">
         <div class="card-body">
             <h5>Order Details</h5>
-            <p><strong>Product:</strong> {{ items.product.name }}</p>
-            <p><strong>Quantity:</strong> {{ items.quantity }}</p>
-            <p><strong>Unit Price:</strong> {{ items.product.price }} RWF</p>
+            {% for item in items %}
+            <p><strong>Product:</strong> {{ item.product.name }}</p>
+            <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+            <p><strong>Unit Price:</strong> {{ item.product.price }} RWF</p>
+            <hr>
+            {% endfor %}
             <p><strong>Total:</strong> {{ order.total }} RWF</p>
             <p><strong>Status:</strong> {{ order.status }}</p>
         </div>
