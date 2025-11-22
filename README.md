@@ -27,7 +27,7 @@ This project was initially created for learning purposes, but it can be improved
 
 ---
 
-## Screenshots
+## Screenshots of Home page
 
 ![Home Page](screenshots/home.png)  
 
