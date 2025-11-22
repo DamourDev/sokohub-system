@@ -31,8 +31,8 @@ class RegistrationForm(UserCreationForm):
         fields = ('username', 'email', 'phone', 'location', 'user_type', 'password1', 'password2')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'id':'id_password1','placeholder': 'Password'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'id': 'id_password2','placeholder': 'Confirm Password'}),
         }
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -52,7 +52,7 @@ class LoginForm(forms.Form):
     remember_me = forms.BooleanField(
         required=False,
         widget=forms.CheckboxInput(
-            attrs={'class': 'form-check-input'}
+            attrs={'class': 'form-check-input border-dark rounded-1'}
         )
     )
     def clean(self):

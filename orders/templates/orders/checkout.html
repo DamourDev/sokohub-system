@@ -31,6 +31,8 @@
         {% csrf_token %}
         {{ form.as_p }}
         
+        
+        <input type="hidden" name="quantity" value="{{ quantity }}">
 
         <button type="submit" class="btn btn-primary mt-3">Place Order</button>
     </form>

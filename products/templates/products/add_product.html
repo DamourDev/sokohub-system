@@ -1,74 +1,76 @@
-{% extends 'base.html' %}
-
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2 class="mb-4">Add New Product</h2>
-
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-
-                <div class="mb-3">
-                    <label for="{{ form.name.id_for_label }}" class="form-label">Product Name</label>
-                    {{ form.name }}
-                    {% if form.name.errors %}
-                        <div class="text-danger">
-                            {{ form.name.errors }}
-                        </div>
-                    {% endif %}
+        <div class="col-lg-7">
+            <!-- Card for form -->
+            <div class="card shadow-lg">
+                <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
+                    <h4 class="mb-0">Add New Product</h4>
+                    <!-- Close button -->
+                    <a href="{% url 'vendor_dashboard' %}" class="text-white fs-5">&times;</a>
                 </div>
-
-                <div class="mb-3">
-                    <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
-                    {{ form.description }}
-                    {% if form.description.errors %}
-                        <div class="text-danger">
-                            {{ form.description.errors }}
-                        </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                     {% endif %}
-                </div>
 
-                <div class="mb-3">
-                    <label for="{{ form.price.id_for_label }}" class="form-label">Price</label>
-                    {{ form.price }}
-                    {% if form.price.errors %}
-                        <div class="text-danger">
-                            {{ form.price.errors }}
+                    <form method="POST" action="{% url 'add_product' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {{ form.non_field_errors }}
+
+                        <div class="mb-3">
+                            {{ form.name.label_tag }}
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="text-danger">{{ form.name.errors }}</div>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                </div>
 
-                <div class="mb-3">
-                    <label for="{{ form.stock.id_for_label }}" class="form-label">Stock Quantity</label>
-                    {{ form.stock }}
-                    {% if form.stock.errors %}
-                        <div class="text-danger">
-                            {{ form.stock.errors }}
+                        <div class="mb-3">
+                            {{ form.description.label_tag }}
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div class="text-danger">{{ form.description.errors }}</div>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                </div>
 
-                <div class="mb-3">
-                    <label for="{{ form.image.id_for_label }}" class="form-label">Product Image</label>
-                    {{ form.image }}
-                    {% if form.image.errors %}
-                        <div class="text-danger">
-                            {{ form.image.errors }}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.price.label_tag }}
+                                {{ form.price }}
+                                {% if form.price.errors %}
+                                    <div class="text-danger">{{ form.price.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.stock.label_tag }}
+                                {{ form.stock }}
+                                {% if form.stock.errors %}
+                                    <div class="text-danger">{{ form.stock.errors }}</div>
+                                {% endif %}
+                            </div>
                         </div>
-                    {% endif %}
-                </div>
 
-                <button type="submit" class="btn btn-primary w-100">Add Product</button>
-            </form>
+                        <div class="mb-3">
+                            {{ form.image.label_tag }}
+                            {{ form.image }}
+                            {% if form.image.errors %}
+                                <div class="text-danger">{{ form.image.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{% url 'vendor_dashboard' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Add Product</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

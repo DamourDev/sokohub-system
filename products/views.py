@@ -15,6 +15,7 @@ User = get_user_model()
 @login_required
 @vendor_required
 def vendor_dashboard(request):
+    form = ProductForm()
     vendor = request.user
     # counting all products belonged to the vendor
     total_products = Product.objects.filter(vendor=vendor).count()
@@ -38,6 +39,7 @@ def vendor_dashboard(request):
         'out_of_stock_products': out_of_stock_products,
         'pending_orders': pending_orders,
         'recent_products': recent_products,
+        'form': form,
     }
 
     return render(request, 'products/dashboard.html', context)
@@ -58,14 +60,22 @@ def add_product(request):
     else:
         form = ProductForm()
     
-    return render(request, 'products/add_product.html', {'form': form})
+    # return render(request, 'products/add_product.html', {'form': form})
 
 @login_required
 @vendor_required
 def vendor_products_list(request):
-    vendor = request.user
+    form = ProductForm()
+
+    vendor = request.user 
     products = Product.objects.filter(status='active', vendor=vendor).order_by('-created_at')
-    return render(request, 'products/vendor_products_list.html', {'products': products})
+    context = {
+        'products': products,
+        'form': form,
+        
+    }
+    
+    return render(request, 'products/vendor_products_list.html', context)
 
  
 

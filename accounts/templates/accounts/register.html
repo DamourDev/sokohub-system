@@ -1,21 +1,32 @@
 {% extends 'base.html' %}
-
 {% block title %}Register | SokoHub{% endblock %}
 
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h3 class="card-title mb-4 text-center">Create an Account</h3>
+{% block content %} 
+<div class="d-flex justify-content-center align-items-center py-5 min-vh-100">
+    <div class="col-lg-6 col-md-8">
+
+        <!-- Card -->
+        <div class="card shadow-lg rounded-4 border-0">
+            <div class="card-body p-5">
+
+                <!-- Heading -->
+                <h3 class="text-center fw-bold mb-1">Create Your Account</h3>
+                <p class="text-center text-muted mb-4" style="font-size: 0.9rem;">
+                    Join SokoHub and start selling or shopping
+                </p>
 
                 <form method="POST" novalidate>
                     {% csrf_token %}
 
                     <!-- Username -->
                     <div class="mb-3">
-                        {{ form.username.label_tag }}
-                        {{ form.username }}
+                        <label class="form-label fw-semibold">{{ form.username.label }}</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="bi bi-person-fill"></i>
+                            </span>
+                            {{ form.username}}
+                        </div>
                         {% for error in form.username.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
@@ -23,72 +34,133 @@
 
                     <!-- Email -->
                     <div class="mb-3">
-                        {{ form.email.label_tag }}
-                        {{ form.email }}
+                        <label class="form-label fw-semibold">{{ form.email.label }}</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="bi bi-envelope-fill"></i>
+                            </span>
+                            {{ form.email}}
+                        </div>
                         {% for error in form.email.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
                     </div>
 
-                    <!-- Password1 -->
+                    <!-- Password Fields (flex row for password1 & password2 on large screens) -->
                     <div class="mb-3">
-                        {{ form.password1.label_tag }}
-                        {{ form.password1 }}
+                        <!-- Password 1 Field -->
+                        <label for="id_password1" class="form-label fw-semibold">Password</label>
+                        <div class="input-group">
+                            <!-- Left icon -->
+                            <span class="input-group-text bg-light">
+                                <i class="bi bi-lock-fill"></i>
+                            </span>
+                            <!-- Password input -->
+                            {{ form.password1 }}
+                            <!-- Right toggle button -->
+                            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('id_password1', this)">
+                                <i class="bi bi-eye-slash"></i>
+                            </button>
+                        </div>
+                        <!-- Errors -->
                         {% for error in form.password1.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
                     </div>
 
-                    <!-- Password2 -->
                     <div class="mb-3">
-                        {{ form.password2.label_tag }}
-                        {{ form.password2 }}
+                        <!-- Password 2 Field -->
+                        <label for="id_password2" class="form-label fw-semibold">Confirm Password</label>
+                        <div class="input-group c">
+                            <!-- Left icon -->
+                            <span class="input-group-text bg-light">
+                                <i class="bi bi-shield-lock-fill"></i>
+                            </span>
+                            <!-- Password input -->
+                            {{ form.password2 }}
+                            <!-- Right toggle button -->
+                            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('id_password2', this)">
+                                <i class="bi bi-eye-slash"></i>
+                            </button>
+                        </div>
+                        <!-- Errors -->
                         {% for error in form.password2.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
                     </div>
 
-                    <!-- User Type -->
-                    <div class="mb-3">
-                        {{ form.user_type.label_tag }}
-                        {{ form.user_type }}
-                        {% for error in form.user_type.errors %}
-                            <div class="text-danger small">{{ error }}</div>
-                        {% endfor %}
-                    </div>
 
-                    <!-- Phone -->
-                    <div class="mb-3">
-                        {{ form.phone.label_tag }}
-                        {{ form.phone }}
-                        {% for error in form.phone.errors %}
-                            <div class="text-danger small">{{ error }}</div>
-                        {% endfor %}
+                    <!-- Phone and User Type as Flex Row -->
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">{{ form.phone.label }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light">
+                                    <i class="bi bi-telephone-fill"></i>
+                                </span>
+                                {{ form.phone}}
+                            </div>
+                            {% for error in form.phone.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">{{ form.user_type.label }}</label>
+                            {{ form.user_type}}
+                            {% for error in form.user_type.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
                     </div>
 
                     <!-- Location -->
-                    <div class="mb-3">
-                        {{ form.location.label_tag }}
-                        {{ form.location }}
+                    <div class="mb-3 mt-3">
+                        <label class="form-label fw-semibold">{{ form.location.label }}</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </span>
+                            {{ form.location}}
+                        </div>
                         {% for error in form.location.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary py-2 fw-semibold">Register</button>
                     </div>
 
                 </form>
 
-                <!-- Login link -->
-                <p class="text-center mt-3">
-                    Already have an account? <a href="{% url 'login' %}">Login here</a>.
+                <!-- Login Link -->
+                <p class="text-center mt-3 mb-0">
+                    Already have an account?
+                    <a href="{% url 'login' %}" class="fw-semibold">Login</a>
                 </p>
 
             </div>
         </div>
+
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function togglePassword(fieldId, btn) {
+    const input = document.getElementById(fieldId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+    }
+}
+</script>
 {% endblock %}

@@ -11,6 +11,16 @@ from .models import Order, OrderItem
 @login_required
 @customer_required
 def checkout(request, pk): 
+    quantity = 1
+
+    if request.method == 'GET':
+
+        quantity = int(request.GET.get('quantity', 1))
+        form = CheckoutForm(initial={
+            'delivery_address': request.user.location,
+            'phone': request.user.phone
+        })
+
     product = get_object_or_404(Product, pk=pk)
     if product.stock > 0:
         quantity_range = range(1, product.stock + 1)
@@ -40,14 +50,7 @@ def checkout(request, pk):
 
             return redirect('order_confirmation', order_id=order.id)
         
-    # elif request.method == 'GET':
-    #     form = CheckoutForm()
-
-    else:
-        form = CheckoutForm(initial={
-            'delivery_address': request.user.location,
-            'phone': request.user.phone
-        })
+    
 
     context = {
         'form': form,
@@ -57,8 +60,6 @@ def checkout(request, pk):
         'total': product.price * quantity
         
     }
-
-    
 
     return render(request, 'orders/checkout.html', context)
     

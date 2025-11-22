@@ -4,6 +4,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
 
 # Project-specific pycache (like sokohub/__pycache__)
 sokohub/__pycache__/

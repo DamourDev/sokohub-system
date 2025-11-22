@@ -6,7 +6,8 @@
     <h2 class="mb-4">My Orders</h2>
 
     {% if orders %}
-        <table class="table table-bordered table-striped">
+    <div class="shadow-sm bg-white">
+        <table class="table table-bordered table-striped rounded-3 shadow-sm">
             <thead class="table-light">
                 <tr>
                     <th>Order Number</th>
@@ -42,7 +43,7 @@
                 {% endfor %}
             </tbody>
         </table>
-
+    </div>
     {% else %}
         <p class="text-muted">You have no orders yet.</p>
     {% endif %}

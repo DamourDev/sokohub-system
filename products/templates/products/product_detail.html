@@ -43,7 +43,7 @@
             <!-- Stock and Buy form -->
             {% if product.stock > 0 %}
                 <span class="badge bg-success mb-3">In Stock: {{ product.stock }}</span>
-                <form action="{% url 'checkout' product.pk %}" method="post" class="mb-3">
+                <form action="{% url 'checkout' product.pk %}" method="GET" class="mb-3">
                     {% csrf_token %}
                     <label for="quantity" class="form-label fw-bold">Quantity:</label>
                     <select name="quantity" id="quantity" class="form-select w-auto mb-3">
@@ -51,8 +51,7 @@
                             <option value="{{ q }}">{{ q }}</option>
                         {% endfor %}
                     </select>
-                    <a href="{% url 'checkout' product.pk %}">
-                        <button type="submit" class="btn btn-primary">Buy Now</button>
+                    <button type="submit" class="btn btn-primary">Buy Now</button>
                 </form>
             {% else %}
                 <span class="badge bg-danger mb-3">Out of Stock</span>
