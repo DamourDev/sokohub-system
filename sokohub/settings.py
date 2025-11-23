@@ -31,6 +31,9 @@ DEBUG = env.bool('DEBUG', default=True)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', env('PRODUCTION_HOST', default='')]
 
+CSRF_TRUSTED_ORIGINS = [f"https://{env('PRODUCTION_HOST')}"]
+
+
 
 
 # Application definition
