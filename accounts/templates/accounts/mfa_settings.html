@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            
+            <h2 class="mb-4 fw-bold">Two-Factor Authentication</h2>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="d-flex align-items-center mb-1">
+                            <h5 class="mb-0 fw-bold me-2">Email Authentication</h5>
+                            {% if is_mfa_enabled and current_method == 'email' %}
+                                <span class="badge bg-success">Active</span>
+                            {% endif %}
+                        </div>
+                        <p class="text-muted mb-0">
+                            Receive a 6-digit code via email ({{ request.user.email }}) to log in.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        {% if is_mfa_enabled and current_method == 'email' %}
+                            <a href="{% url 'disable_mfa' %}" class="btn btn-outline-danger">Disable</a>
+                        {% else %}
+                            <a href="{% url 'enable_email_mfa' %}" class="btn btn-primary">Enable</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="d-flex align-items-center mb-1">
+                            <h5 class="mb-0 fw-bold me-2">Authenticator App</h5>
+                            {% if is_mfa_enabled and current_method == 'app' %}
+                                <span class="badge bg-success">Active</span>
+                            {% elif has_app_device %}
+                                <span class="badge bg-secondary">Configured</span>
+                            {% endif %}
+                        </div>
+                        <p class="text-muted mb-0">
+                            Use an app like Google Authenticator or Authy.
+                        </p>
+                    </div>
+
+                    <div>
+                        {% if is_mfa_enabled and current_method == 'app' %}
+                            <a href="{% url 'disable_mfa' %}" class="btn btn-outline-danger">Disable</a>
+                        
+                        {% elif has_app_device %}
+                            <form action="{% url 'enable_app_mfa' %}" method="POST" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Switch to App</button>
+                            </form>
+                        
+                        {% else %}
+                            <a href="{% url 'enable_app_mfa' %}" class="btn btn-primary">Setup</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                 {% if request.user.user_type == 'vendor' %}
+                    <a href="{% url 'vendor_dashboard' %}" class="text-decoration-none">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+                    </a>
+                {% else %}
+                     <a href="{% url 'products_list' %}" class="text-decoration-none">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Shop
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
