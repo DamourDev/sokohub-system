@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="col-md-5 col-lg-4">
+        
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-body p-5 text-center">
+                
+                <div class="mb-4 d-inline-block bg-primary bg-opacity-10 text-primary rounded-circle p-3">
+                    <i class="bi bi-envelope-check-fill display-4"></i>
+                </div>
+
+                <h3 class="fw-bold text-dark mb-2">Verify it's you</h3>
+                <p class="text-muted mb-4">
+                    We sent a 6-digit code to <br>
+                    <strong class="text-dark">{{ request.user.email }}</strong>
+                </p>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger py-2 small shadow-sm border-0 mb-4 fade show">
+                            <i class="bi bi-exclamation-circle-fill me-1"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label class="form-label text-uppercase small text-muted fw-bold">Verification Code</label>
+                        
+                        <input type="text" 
+                               name="otp_code" 
+                               class="form-control form-control-lg text-center fw-bold text-primary" 
+                               placeholder="• • • • • •" 
+                               maxlength="6" 
+                               inputmode="numeric"
+                               pattern="[0-9]*"
+                               autocomplete="one-time-code"
+                               style="font-size: 2rem; letter-spacing: 12px; border: 2px solid #e9ecef; background-color: #f8f9fa;"
+                               required 
+                               autofocus>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm">
+                            Verify Email
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="card-footer bg-white border-0 py-3 text-center">
+                <p class="small text-muted mb-0">
+                    Didn't receive it? 
+                    <a href="{% url 'enable_email_mfa' %}" class="text-decoration-none fw-bold">Resend</a>
+                    <span class="mx-1">|</span>
+                    <a href="{% url 'mfa_settings' %}" class="text-decoration-none text-secondary">Cancel</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
