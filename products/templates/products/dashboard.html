@@ -2,152 +2,184 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-4 mb-5">
 
-    <!-- Welcome Message -->
-    <div>
-        <h6 class="text-muted">Welcome back! {{ request.user.username }} 👋</h6>
-    </div>
-    <h2 class="text-center mb-4">Vendor Dashboard</h2>
-
-    <!-- Stats Row -->
-    <div class="row mb-4">
-        <div class="col-md-3 col-sm-6 mb-3">
-            <div class="card text-white bg-primary h-100 shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Total Products</h5>
-                    <p class="card-text display-6">{{ total_products }}</p>
-                </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                {% if message.tags == 'success' %}
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                {% elif message.tags == 'error' %}
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                {% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        </div>
+        {% endfor %}
+    {% endif %}
 
-        <div class="col-md-3 col-sm-6 mb-3">
-            <div class="card text-white bg-success h-100 shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Active Products</h5>
-                    <p class="card-text display-6">{{ active_products }}</p>
-                </div>
-            </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark">Vendor Dashboard</h2>
+            <p class="text-muted mb-0">Welcome back, {{ request.user.username }}! Here is your daily overview.</p>
         </div>
-
-        <div class="col-md-3 col-sm-6 mb-3">
-            <div class="card text-white bg-danger h-100 shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Out of Stock</h5>
-                    <p class="card-text display-6">{{ out_of_stock_products }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-3">
-            <div class="card text-white bg-warning h-100 shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Pending Orders</h5>
-                    <p class="card-text display-6">{{ pending_orders }}</p>
-                </div>
-            </div>
-        </div>
+        <a href="{% url 'add_product' %}" class="btn btn-primary px-4 py-2 shadow-sm fw-bold">
+            <i class="bi bi-plus-lg me-2"></i>Add New Product
+        </a>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="mb-4">
-        <!-- Open Add Product Modal -->
-        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addProductModal">
-            Add New Product
-        </button>
-        <a href="{% url 'vendor_products_list' %}" class="btn btn-secondary me-2">View All Products</a>
-        <a href="{% url 'vendor_orders' %}" class="btn btn-info">View Orders</a>
+    <div class="row g-3 mb-5">
+        <div class="col-md-3 col-sm-6">
+            <div class="card border-0 shadow-sm h-100 border-start border-4 border-primary">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase small fw-bold">Total Products</h6>
+                    <h3 class="mb-0 display-6 fw-bold text-dark">{{ total_products }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="card border-0 shadow-sm h-100 border-start border-4 border-success">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase small fw-bold">Active</h6>
+                    <h3 class="mb-0 display-6 fw-bold text-dark">{{ active_products }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="card border-0 shadow-sm h-100 border-start border-4 border-danger">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase small fw-bold">Out of Stock</h6>
+                    <h3 class="mb-0 display-6 fw-bold text-dark">{{ out_of_stock_products }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="card border-0 shadow-sm h-100 border-start border-4 border-warning">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase small fw-bold">Pending Orders</h6>
+                    <h3 class="mb-0 display-6 fw-bold text-dark">{{ pending_orders }}</h3>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Recent Products Grid -->
-    <h4 class="mt-5 mb-3 text-secondary fw-semibold">Recent Products</h4>
-    <div class="row">
+    <div class="mb-4 d-flex gap-2">
+        <a href="{% url 'vendor_products_list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-list-ul me-2"></i>Manage All Products
+        </a>
+        <a href="{% url 'vendor_orders' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-receipt me-2"></i>Manage Orders
+        </a>
+    </div>
+
+    <h4 class="mb-3 text-dark fw-bold">Recent Products</h4>
+    <div class="row g-4">
         {% if recent_products %}
             {% for product in recent_products %}
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
-                    <div class="card h-100 shadow-sm">
-                        {% if product.image %}
-                            <img src="{{ product.image.url }}" class="card-img-top" style="width:100%; height:200px; object-fit:cover; border-radius:6px;" alt="{{ product.name }}">
-                        {% else %}
-                            <img src="{% static 'images/placeholder.png' %}" class="card-img-top" style="height:200px; object-fit:cover; border-radius:6px;" alt="No Image">
-                        {% endif %}
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text fw-bold text-success">{{ product.price }} Frw</p>
-                            <p class="card-text text-muted fw-semibold">Status: {{ product.status|capfirst }}</p>
-                            {% if product.stock > 0 %}
-                                <span class="badge bg-success mb-2">In Stock: {{ product.stock }}</span>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card h-100 shadow-sm border-0 product-card">
+                        <div class="position-relative">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ product.name }}">
                             {% else %}
-                                <span class="badge bg-danger mb-2">Out of Stock</span>
+                                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <i class="bi bi-image text-muted fs-1"></i>
+                                </div>
                             {% endif %}
+                            
+                            {% comment %} <div class="position-absolute top-0 end-0 m-2">
+                                
+                            </div> {% endcomment %}
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title text-truncate fw-bold mb-1">{{ product.name }}</h5>
+                            
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-primary fw-bold">{{ product.price }} Frw</span>
+                                {% if product.category %}
+                                    <small class="text-muted">{{ product.category.name }}</small>
+                                {% endif %}
+                            </div>
+                            {% if product.stock > 0 %}
+                                    <span class="badge bg-success bg-opacity-75 backdrop-blur shadow-sm">In Stock</span>
+                                {% else %}
+                                    <span class="badge bg-danger shadow-sm">Out of Stock</span>
+                                {% endif %}
+                            
+                            <div class="d-grid gap-2 d-flex justify-content-between mt-3 w-1/2">
+                                <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-outline-primary flex-grow-1">
+                                    <i class="bi bi-pencil me-1"></i> Edit
+                                </a>
+                                
+                                <button type="button" 
+                                        class="btn btn-sm btn-outline-danger" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#deleteModal" 
+                                        data-product-id="{{ product.id }}"
+                                        data-product-name="{{ product.name }}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <p>No products added yet.</p>
+            <div class="col-12 text-center py-5 bg-light rounded-3">
+                <div class="text-muted mb-3"><i class="bi bi-box-seam display-1"></i></div>
+                <h5>No products yet</h5>
+                <p class="text-muted">Start building your store by adding your first item.</p>
+                <a href="{% url 'add_product' %}" class="btn btn-primary">Add Product</a>
+            </div>
         {% endif %}
     </div>
 </div>
 
-<!-- Add Product Modal -->
-<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg mx-3 mt-5">
-    <div class="modal-content">
-      <div class="modal-header bg-success text-white">
-        <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form method="POST" action="{% url 'add_product' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-
-            <!-- Name and Price in one row -->
-            <div class="row mb-3">
-                <div class="col-md-6 mb-2 fw-semibold">
-                    {{ form.name.label_tag }}
-                    {{ form.name }}
-                    {% if form.name.errors %}<div class="text-danger">{{ form.name.errors }}</div>{% endif %}
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pt-0 pb-4">
+                <div class="text-danger mb-3">
+                    <i class="bi bi-trash3 display-1"></i>
                 </div>
-                <div class="col-md-6 mb-2 fw-semibold">
-                    {{ form.price.label_tag }}
-                    {{ form.price }}
-                    {% if form.price.errors %}<div class="text-danger">{{ form.price.errors }}</div>{% endif %}
+                <h4 class="fw-bold mb-2">Delete Product?</h4>
+                <p class="text-muted mb-4">Are you sure you want to delete <strong id="modalProductName" class="text-dark">this item</strong>?<br>This action cannot be undone.</p>
+                
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
+                    
+                    <form id="deleteForm" method="POST" action="">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger px-4 fw-bold">Yes, Delete</button>
+                    </form>
                 </div>
             </div>
-
-            <!-- Stock and Image in one row -->
-            <div class="row mb-3 fw-semibold">
-                <div class="col-md-6 mb-2">
-                    {{ form.stock.label_tag }}
-                    {{ form.stock }}
-                    {% if form.stock.errors %}<div class="text-danger">{{ form.stock.errors }}</div>{% endif %}
-                </div>
-                <div class="col-md-6 mb-2 fw-semibold">
-                    {{ form.image.label_tag }}
-                    {{ form.image }}
-                    {% if form.image.errors %}<div class="text-danger">{{ form.image.errors }}</div>{% endif %}
-                </div>
-            </div>
-
-            <!-- Description full width -->
-            <div class="mb-3 fw-semibold">
-                {{ form.description.label_tag }}
-                {{ form.description }}
-                {% if form.description.errors %}<div class="text-danger">{{ form.description.errors }}</div>{% endif %}
-            </div>
-
-            <!-- Buttons -->
-            <div class="d-flex justify-content-end gap-2">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Add Product</button>
-            </div>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
 
+<script>
+    var deleteModal = document.getElementById('deleteModal')
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        var productId = button.getAttribute('data-product-id')
+        var productName = button.getAttribute('data-product-name')
+        
+        // Update Name
+        var modalTitle = deleteModal.querySelector('#modalProductName')
+        modalTitle.textContent = productName
+        
+        // Update Form Action URL
+        var form = deleteModal.querySelector('#deleteForm')
+        form.action = "/product/delete/" + productId + "/"
+    })
+</script>
 
 {% endblock content %}

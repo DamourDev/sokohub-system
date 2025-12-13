@@ -4,12 +4,14 @@ from .models import Product
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'description', 'price', 'stock', 'image']
+        fields = ['category','name', 'description', 'price','unit', 'stock', 'image']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'rows': 4,'class': 'form-control', 'style': 'resize:none;'}),
-            'price': forms.NumberInput(attrs={'class': 'form-control'}),
-            'stock': forms.NumberInput(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Product Name'}),
+            'description': forms.Textarea(attrs={'rows': 4,'class': 'form-control', 'style': 'resize:none;', 'placeholder': 'Product details...'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '..Frw'}),
+            'unit': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g kg, litre, piece'}),
+            'stock': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '0'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 

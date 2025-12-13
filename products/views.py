@@ -32,7 +32,8 @@ def vendor_dashboard(request):
     ).distinct().count()
 
     # 5 recent products added by the vendor
-    recent_products = Product.objects.filter(vendor=vendor).order_by('-created_at')[:5]
+    recent_products = Product.objects.filter(vendor=vendor, is_deleted=False).order_by('-created_at')[:8
+    ]
     context = {
         'total_products': total_products,
         'active_products': active_products,
@@ -60,7 +61,7 @@ def add_product(request):
     else:
         form = ProductForm()
     
-    # return render(request, 'products/add_product.html', {'form': form})
+    return render(request, 'products/product_form.html', {'form': form})
 
 @login_required
 @vendor_required
@@ -146,3 +147,41 @@ def vendor_public_products(request, vendor_id):
         'vendor': vendor,
     }
     return render(request, 'products/vendor_public_products.html', context)
+
+
+@login_required
+@vendor_required
+def delete_product(request, pk):
+    product = get_object_or_404(Product, pk=pk, vendor=request.user)
+
+    if request.method ==  'POST':
+        product.is_deleted = True
+        product.save()
+        messages.success(request, 'Product deleted successfully!')
+        
+        return redirect(request.META.get('HTTP_REFERER', 'vendor_dashboard'))
+    
+    return redirect('vendor_dashboard')
+    
+
+@login_required
+@vendor_required
+def edit_product(request, pk):
+    product = get_object_or_404(Product, pk=pk, vendor=request.user)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Product updated successfully!')
+            return redirect('vendor_products_list')
+    else:
+        form = ProductForm(instance=product)
+
+    context = {
+        'form': form,
+        'product': product,
+        'action': 'edit',
+    }
+
+    return render(request, 'products/product_form.html',context)
