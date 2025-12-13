@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from decorators import vendor_required
-from products.models import Product
+from products.models import Product, ProductGallery, Category
 from orders.models import Order
 from .forms import ProductForm
 from django.contrib import messages
 from django.core.paginator import Paginator
+from .forms import MultipleFileInput
+from django import forms
 # from django.contrib.auth.models import User
 
 from django.contrib.auth import get_user_model
@@ -32,7 +34,7 @@ def vendor_dashboard(request):
     ).distinct().count()
 
     # 5 recent products added by the vendor
-    recent_products = Product.objects.filter(vendor=vendor, is_deleted=False).order_by('-created_at')[:8
+    recent_products = Product.objects.filter(vendor=vendor, is_deleted=False).prefetch_related('gallery_images').order_by('-created_at')[:8
     ]
     context = {
         'total_products': total_products,
@@ -50,16 +52,42 @@ def vendor_dashboard(request):
 @vendor_required
 def add_product(request):
     if request.method == 'POST':
+
         form = ProductForm(request.POST, request.FILES)
+       
         if form.is_valid():
             product = form.save(commit=False)
             product.vendor = request.user
             product.save()
+
+            # Handling multiple gallery images
+            images = request.FILES.getlist('gallery_images')
+            for image in images:
+                if image:
+                    ProductGallery.objects.create(product=product, image=image)
+
+
             messages.success(request, 'Product added successfully!')
             return redirect('vendor_products_list')
 
+        else:
+            print(form.errors)
+
+            form.fields['gallery_images'] = forms.FileField(
+            widget=MultipleFileInput(attrs={'multiple': True, 'class': 'form-control'}),
+            required=False,
+            label='Gallery Images'
+        )
+
     else:
         form = ProductForm()
+
+    form.fields['gallery_images'] = forms.FileField(
+        widget=MultipleFileInput(attrs={'multiple': True, 'class': 'form-control'}),
+        required=False,
+        label='Gallery Images'
+    )   
+        
     
     return render(request, 'products/product_form.html', {'form': form})
 
@@ -69,7 +97,7 @@ def vendor_products_list(request):
     form = ProductForm()
 
     vendor = request.user 
-    products = Product.objects.filter(status='active', vendor=vendor).order_by('-created_at')
+    products = Product.objects.filter(status='active', vendor=vendor).prefetch_related('gallery_images').order_by('-created_at')
     context = {
         'products': products,
         'form': form,
@@ -173,6 +201,12 @@ def edit_product(request, pk):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
+
+            # Handle multiple gallery images
+            images = request.FILES.getlist('gallery_images')
+            for image in images:
+                ProductGallery.objects.create(product=product, image=image)
+
             messages.success(request, 'Product updated successfully!')
             return redirect('vendor_products_list')
     else:

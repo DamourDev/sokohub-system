@@ -85,6 +85,16 @@
                                 <div class="text-danger small mt-1">{{ form.image.errors }}</div>
                             {% endif %}
                         </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-muted small text-uppercase">Gallery Images (Optional)</label>
+                            {{ form.gallery_images }}
+                            <div class="form-text small">Hold <strong>Ctrl</strong> (or Cmd) to select multiple photos.</div>
+                            {% if form.gallery_images.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.gallery_images.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="{% url 'vendor_dashboard' %}" class="btn btn-light text-muted px-4">Cancel</a>

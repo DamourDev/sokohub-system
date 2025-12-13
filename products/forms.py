@@ -1,7 +1,19 @@
 from django import forms
 from .models import Product
 
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
+
 class ProductForm(forms.ModelForm):
+    # gallery_images = forms.FileField(
+    #     widget=MultipleFileInput(attrs={'multiple': True, 'class': 'form-control'}),
+    #     required=False,
+    #     label='Gallery Images'
+    # )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.fields['gallery_images'].required = False
     class Meta:
         model = Product
         fields = ['category','name', 'description', 'price','unit', 'stock', 'image']
