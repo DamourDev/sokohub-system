@@ -283,10 +283,6 @@ def enable_email_mfa(request):
     return redirect('verify_email_setup')
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from .models import EmailOTP
 
 @login_required
 def verify_email_setup(request):
