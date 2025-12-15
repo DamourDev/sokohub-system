@@ -21,15 +21,21 @@
                 {% endif %}
             </div>
 
-            <!-- Password field -->
             <div class="mb-3">
                 <label class="form-label fw-semibold">{{ form.password.label }}</label>
                 {{ form.password }}
+                
                 {% if form.password.errors %}
                     <div class="text-danger small">
                         {{ form.password.errors }}
                     </div>
                 {% endif %}
+
+                <div class="text-end mt-1">
+                    <a href="{% url 'reset_password' %}" class="small text-decoration-none text-primary">
+                        Forgot Password?
+                    </a>
+                </div>
             </div>
 
             <!-- Remember me -->

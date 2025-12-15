@@ -11,6 +11,10 @@ from django_otp.plugins.otp_totp.models import TOTPDevice
 from .forms import UserUpdateForm
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
+import qrcode
+import io
+import base64
+from django.http import HttpResponse
 
 
 User = get_user_model() 
@@ -121,6 +125,50 @@ def login_view(request):
     return render(request, 'accounts/login.html', context)
 
 
+@login_required
+def enable_app_mfa(request):
+    user = request.user
+    # Get or Create the Device (Unconfirmed)
+    device, created = TOTPDevice.objects.get_or_create(user=user, name="default")
+
+    if request.method == 'POST':
+        code = request.POST.get('otp_code')
+        
+        if device.verify_token(code):
+            device.confirmed = True
+            device.save()
+            
+            # Update User Model Switches
+            user.mfa_enabled = True
+            user.mfa_method = 'app'
+            user.save()
+            
+            messages.success(request, "Authenticator App enabled successfully!")
+            return redirect('vendor_dashboard') 
+        else:
+            messages.error(request, "Invalid code. Please try again.")
+
+   # Generate the OTP URL for the QR Code using authenticator apps
+    otp_url = device.config_url 
+    print("OTP URL:", otp_url)
+    
+    # Generate the image using qrcode library
+    img = qrcode.make(otp_url)
+    buffer = io.BytesIO()
+    img.save(buffer, format="PNG")
+    
+    # Convert to Base64 string to display in HTML
+    qr_code_base64 = base64.b64encode(buffer.getvalue()).decode()
+    print("QR Code Base64:", len(qr_code_base64)    )
+
+    context = {
+        'qr_code': qr_code_base64,
+        'otp_url': otp_url,
+    }
+
+    return render(request, 'accounts/enable_app_mfa.html', context)
+
+
 
 
 def verify_mfa(request):
@@ -137,7 +185,8 @@ def verify_mfa(request):
 
         # Check the code based on their method
         if user.mfa_method == 'app':
-            # Check against App (TOTP)
+
+            # Check against TOTP
             device = TOTPDevice.objects.filter(user=user, confirmed=True).first()
             if device and device.verify_token(code):
                 is_verified = True
@@ -154,7 +203,7 @@ def verify_mfa(request):
 
         
         if is_verified:
-            # SUCCESS: Log them in and clear the session
+            # SUCCESS: Log he/she in and clear the session
             login(request, user)
             del request.session['pre_mfa_user_id']
             
@@ -167,10 +216,25 @@ def verify_mfa(request):
             messages.error(request, "Invalid code. Please try again.")
 
     context = {
-        'mfa_method': user.mfa_method
+        'mfa_method': user.mfa_method,
+        
     }
 
     return render(request, 'accounts/verify_mfa.html', context)
+
+
+
+@login_required
+def disable_mfa(request):
+    request.user.mfa_enabled = False
+    request.user.mfa_method = '' # Clear the preference
+    request.user.save()
+    
+    # Optional: Delete the App device or Email OTP if you want a clean slate
+    # TOTPDevice.objects.filter(user=request.user).delete()
+    
+    messages.info(request, "Two-Factor Authentication disabled.")
+    return redirect('vendor_dashboard')
 
 @login_required
 def logout_view(request):
@@ -259,7 +323,13 @@ def mfa_settings(request):
 def enable_email_mfa(request):
     user = request.user
     
-    otp, _ = EmailOTP.objects.get_or_create(user=user)
+    # otp, _ = EmailOTP.objects.get_or_create(user=user)
+
+    try:
+        otp = EmailOTP.objects.get(user=user)
+    except EmailOTP.DoesNotExist:
+        otp = EmailOTP(user=user)
+        
     
     # This generates the number, sets the time, sets expiry, and saves it.
     otp.generate_code()
@@ -283,10 +353,6 @@ def enable_email_mfa(request):
     return redirect('verify_email_setup')
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from .models import EmailOTP
 
 @login_required
 def verify_email_setup(request):

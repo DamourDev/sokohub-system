@@ -71,17 +71,17 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{% url 'edit_profile' %}">
                             <i class="bi bi-person-fill-gear"></i>
                             Edit Profile
                         </a> 
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">Change Password</a>
+                        <a class="dropdown-item" href="{% url 'change_password' %}">Change Password</a>
                     </li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
-                        <a class="dropdown-item" href="#">Two-Factor Auth</a>
+                        <a class="dropdown-item" href="{% url 'mfa_settings' %}">Two-Factor Auth</a>
                     </li>
                 </ul>
             </li>

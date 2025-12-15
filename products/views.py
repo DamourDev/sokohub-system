@@ -8,8 +8,6 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from .forms import MultipleFileInput
 from django import forms
-# from django.contrib.auth.models import User
-
 from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your views here.
