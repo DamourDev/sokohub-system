@@ -82,13 +82,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="card h-100 shadow-sm border-0 product-card">
                         <div class="position-relative">
-                            {% comment %} {% if product.image %}
-                                <img src="{{ product.image.url }}" class="card-img-top gallery-trigger" style="height: 200px; object-fit: cover;" alt="{{ product.name }}">
-                            {% else %}
-                                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <i class="bi bi-image text-muted fs-1"></i>
-                                </div>
-                            {% endif %} {% endcomment %}
+                            
 
                             {% if product.image %}
                                 <img src="{{ product.image.url }}" 
@@ -182,12 +176,13 @@
 </div>
 <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content bg-transparent border-0 shadow-none">
+    <div class="modal-content bg-gray-500 border-0 shadow-none">
         <div class="modal-body p-0 text-center position-relative">
-            
-            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3" data-bs-dismiss="modal"></button>
+            <p class="text-muted mt-3 fw-bold">More gallery images for this Product</p>
 
-            <img id="modalMainImage" src="" class="img-fluid rounded shadow-lg mb-2" style="max-height: 500px; object-fit: contain; background: #fff;">
+            <button type="button" class="btn-close btn-close-red bg-red position-absolute top-0 end-0 m-3 z-3" data-bs-dismiss="modal"></button>
+
+            <img id="modalMainImage" src="" class="img-fluid rounded shadow-lg mb-2" style="max-height: 500px; object-fit: contain; background: #705454ff;">
 
             <div id="modalGalleryStrip" class="d-flex justify-content-center gap-2 overflow-auto py-2"></div>
 
