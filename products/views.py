@@ -150,18 +150,34 @@ def landing_page(request):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    if product.stock > 0:
-        quantity_range = range(1, product.stock + 1)
+    
+    gallery = product.gallery_images.all()
 
+    # Logic: Determine if we show a Dropdown or a Text Input
+    show_manual_input = False
+    quantity_range = []
+
+    if product.stock > 12:
+        # If stock is greater than 12, we allow the user to type the number manually
+        show_manual_input = True
+        
+    elif product.stock > 0:
+        # If stock is between 1 and 12, we provide a specific range for the dropdown
+        show_manual_input = False
+        quantity_range = range(1, product.stock + 1)
+        
     else:
+        # Stock is 0 (Out of stock)
         quantity_range = []
 
     context = {
         'product': product,
-        'quantity_range': quantity_range,
+        'gallery': gallery,             
+        'show_manual_input': show_manual_input, 
+        'quantity_range': quantity_range,      
     }
 
-    return render(request, 'products/product_detail.html',context)
+    return render(request, 'products/product_detail.html', context)
 
 
 def vendor_public_products(request, vendor_id):

@@ -1,66 +1,146 @@
-{% comment %} {% extends "base.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
 <div class="container py-5">
 
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="mb-4">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'landing_page' %}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'products_list' %}">Products</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
-      </ol>
+    <nav aria-label="breadcrumb" class="mb-4 bg-light p-3 rounded">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'landing_page' %}" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'products_list' %}" class="text-decoration-none">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+        </ol>
     </nav>
 
-    <div class="row">
-        <!-- Product Image -->
-        <div class="col-md-6 mb-4">
-            {% if product.image %}
-                <img src="{{ product.image.url }}" class="img-fluid rounded shadow-sm" 
-                     style="object-fit:contain; max-height:500px; width:100%;" alt="{{ product.name }}">
-            {% else %}
-                <img src="{% static 'images/placeholder.png' %}" class="img-fluid rounded shadow-sm"
-                     style="object-fit:contain; max-height:500px; width:100%;" alt="No image">
+    <div class="row g-5">
+        
+        <div class="col-md-6">
+            <div class="mb-3 text-center border rounded p-2">
+                {% if product.image %}
+                    <img id="mainImage" src="{{ product.image.url }}" class="img-fluid" 
+                         style="object-fit: contain; max-height: 500px; width: 100%; transition: 0.3s;" 
+                         alt="{{ product.name }}">
+                {% else %}
+                    <img id="mainImage" src="{% static 'images/placeholder.png' %}" class="img-fluid" 
+                         style="object-fit: contain; max-height: 500px; width: 100%;" 
+                         alt="No image">
+                {% endif %}
+            </div>
+
+            {% if gallery %}
+            <div class="d-flex gap-2 overflow-auto pb-2">
+                {% if product.image %}
+                <img onclick="swapImage(this)" src="{{ product.image.url }}" 
+                     class="border rounded" 
+                     style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; opacity: 1; border-color: #0d6efd !important; border-width: 2px !important;"
+                     alt="Main View">
+                {% endif %}
+
+                {% for img in gallery %}
+                    <img onclick="swapImage(this)" src="{{ img.image.url }}" 
+                         class="border rounded" 
+                         style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; opacity: 0.7;"
+                         alt="Gallery View">
+                {% endfor %}
+            </div>
             {% endif %}
         </div>
 
-        <!-- Product Details -->
         <div class="col-md-6">
-            <h2 class="fw-bold">{{ product.name }}</h2>
-            <strong>Price:</strong><p class="fs-3 text-primary">{{ product.price }} Frw</p>
-            <p><strong>Description: </strong>{{ product.description }}</p>
+            <h2 class="fw-bold mb-2">{{ product.name }}</h2>
+            
+            <div class="mb-4">
+                <span class="fs-3 fw-bold text-primary">{{ product.price }} Frw</span>
+                
+            </div>
+            <div class="mb-4">
+                {% if product.stock > 0 %}
+                    <span class="badge bg-success fs-6">In Stock: {{ product.stock }}</span>
+                {% else %}
+                    <span class="badge bg-danger fs-6">Out of Stock</span>
+                {% endif %}
+            </div>
 
-            <!-- Vendor link -->
+
+            <p class="text-muted" style="line-height: 1.6;">
+                <strong>Description:</strong><br>
+                {{ product.description }}
+            </p>
+
             {% if product.vendor %}
-                <p><strong>Vendor:</strong> <a href="{% url 'vendor_public_products' product.vendor.pk %}">
-                    {{ product.vendor.username }}
-                </a></p>
-            {% else %}
-                <p>Vendor: Unknown</p>
+                <p class="mb-4">
+                    <strong>Vendor:</strong> 
+                    <a href="{% url 'vendor_public_products' product.vendor.pk %}" class="text-decoration-none">
+                        {{ product.vendor.username }}
+                    </a>
+                </p>
             {% endif %}
 
-            <!-- Stock and Buy form -->
+            <hr class="my-4">
+
             {% if product.stock > 0 %}
-                <span class="badge bg-success mb-3">In Stock: {{ product.stock }}</span>
-                <form action="{% url 'checkout' product.pk %}" method="GET" class="mb-3">
+                <form action="{% url 'checkout' product.pk %}" method="GET">
                     {% csrf_token %}
-                    <label for="quantity" class="form-label fw-bold">Quantity:</label>
-                    <select name="quantity" id="quantity" class="form-select w-auto mb-3">
-                        {% for q in quantity_range %}
-                            <option value="{{ q }}">{{ q }}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-primary">Buy Now</button>
+                    
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label fw-bold">Quantity:</label>
+                        
+                        {% if show_manual_input %}
+                            <div class="input-group" style="max-width: 200px;">
+                                <input type="number" name="quantity" id="quantity" class="form-control" 
+                                       value="1" min="1" max="{{ product.stock }}" required>
+                                <span class="input-group-text text-muted">/ {{ product.stock }}</span>
+                            </div>
+                            <small class="text-muted">Enter any amount up to {{ product.stock }}</small>
+                        
+                        {% else %}
+                            <select name="quantity" id="quantity" class="form-select" style="max-width: 200px;">
+                                {% for q in quantity_range %}
+                                    <option value="{{ q }}">{{ q }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-block">
+                        <button type="submit" class="btn btn-primary btn-lg px-5">Buy Now</button>
+                    </div>
                 </form>
             {% else %}
-                <span class="badge bg-danger mb-3">Out of Stock</span>
-                <button class="btn btn-secondary" disabled>Buy Now</button>
+                <button class="btn btn-secondary btn-lg w-100" disabled>Sold Out</button>
             {% endif %}
 
-            <!-- Back button -->
-            <a href="{% url 'products_list' %}" class="btn btn-outline-secondary mt-3">← Back to Products</a>
+            <div class="mt-4">
+                <a href="{% url 'products_list' %}" class="text-secondary text-decoration-none">
+                    &larr; Back to Products
+                </a>
+            </div>
         </div>
     </div>
 </div>
-{% endblock content %} {% endcomment %}
+
+<script>
+    function swapImage(thumbnail) {
+        // 1. Change Main Image Source
+        var mainImg = document.getElementById('mainImage');
+        mainImg.src = thumbnail.src;
+
+        // 2. Visual Feedback (Opacities and Borders)
+        // Note: Since we can't use external classes, we iterate sibling images roughly
+        var container = thumbnail.parentElement;
+        var siblings = container.getElementsByTagName('img');
+        
+        for (var i = 0; i < siblings.length; i++) {
+            // Reset all to default style
+            siblings[i].style.opacity = '0.7';
+            siblings[i].style.border = '1px solid #dee2e6'; // default bootstrap border color
+            siblings[i].style.borderWidth = '1px';
+        }
+
+        // Highlight the clicked one
+        thumbnail.style.opacity = '1';
+        thumbnail.style.borderColor = '#0d6efd'; // Bootstrap primary blue
+        thumbnail.style.borderWidth = '2px';
+    }
+</script>
+{% endblock content %}
