@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid"> <div class="row">
+        
+        <div class="col-lg-9 py-5 px-4 bg-light">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+                <div>
+                    <h2 class="fw-bold mb-1">More {{ category.name }}</h2>
+                    <p class="text-muted mb-0">Related to "{{ source_product.name }}"</p>
+                </div>
+                <a href="{% url 'products_list' %}" class="btn btn-outline-secondary">View All Categories</a>
+            </div>
+
+            <div class="row g-4">
+                {% for product in products %}
+                <div class="col-6 col-md-4 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm product-card-hover">
+                        <div class="position-relative overflow-hidden bg-white rounded-top" style="height: 180px;">
+                            <a href="{% url 'product_detail' product.pk %}">
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" class="w-100 h-100 p-3" style="object-fit: contain;" alt="{{ product.name }}">
+                                {% else %}
+                                    <img src="{% static 'images/placeholder.png' %}" class="w-100 h-100 p-3" style="object-fit: contain;" alt="No image">
+                                {% endif %}
+                            </a>
+                            {% if product.stock > 0 and product.stock < 5 %}
+                                <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2 shadow-sm">low Stock</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="card-body d-flex flex-column bg-white">
+                            <h6 class="card-title fw-bold text-dark text-truncate">{{ product.name }}</h6>
+                            <p class="small text-muted mb-2">{{ product.description}}</p>
+                            
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold text-primary">{{ product.price }} Frw</span>
+                                </div>
+                                
+                                {% if product.stock > 0 %}
+                                    <button type="button" 
+                                            class="btn btn-primary btn-sm w-100 add-to-cart-btn" 
+                                            data-index="{{ product.id }}">
+                                        <i class="bi bi-plus-lg"></i> Add
+                                    </button>
+                                {% else %}
+                                    <button class="btn btn-secondary btn-sm w-100" disabled>Sold Out</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No related products found.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if products.has_other_pages %}
+            <nav class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if products.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Prev</a></li>
+                    {% endif %}
+                    <li class="page-item active"><span class="page-link">{{ products.number }}</span></li>
+                    {% if products.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-3 border-start bg-white p-0  sticky-sidebar shadow-sm">
+            
+            <div class="p-3 bg-light border-bottom">
+                <h5 class="fw-bold mb-3"><i class="bi bi-cart3 me-2"></i>Current Cart</h5>
+                
+                <div class="d-flex justify-content-between align-items-end mb-2">
+                    <span class="small text-muted">Total Amount</span>
+                    <span class="h4 fw-bold text-primary mb-0" id="cart-subtotal">{{ cart.get_total_price }} Frw</span>
+                </div>
+                
+                <div class="d-grid mt-3">
+                    <a href="#" class="btn btn-success fw-bold py-2">Checkout Now</a>
+                </div>
+            </div>
+
+            <div class="cart-scroll-area p-3" id="cart-items-container">
+                
+                {% for item in cart %}
+                <div class="d-flex gap-2 mb-3 border-bottom pb-3 cart-item-row" id="row-{{ item.product.id }}" data-index="{{ item.product.id }}">
+                    <div style="width: 50px; height: 50px; flex-shrink: 0;">
+                        {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" class="w-100 h-100 rounded border" style="object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'images/placeholder.png' %}" class="w-100 h-100 rounded border">
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex-grow-1 overflow-hidden">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mb-0 small fw-bold text-truncate w-75">{{ item.product.name }}</h6>
+                            <button class="btn btn-link text-danger p-0 small cart-remove" data-index="{{ item.product.id }}" style="font-size: 0.8rem;">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                        <div class="small text-muted mb-2">{{ item.product.price }} Frw</div>
+                        
+                        <div class="d-flex align-items-center bg-light rounded px-1" style="width: fit-content;">
+                            <button class="btn btn-sm px-2 cart-decrement text-secondary" data-index="{{ item.product.id }}">
+                                <i class="bi bi-dash-lg"></i>
+                            </button>
+                            
+                            <span class="fw-bold mx-2 small" id="qty-{{ item.product.id }}">{{ item.quantity }}</span>
+                            
+                            <button class="btn btn-sm px-2 text-primary cart-increment" data-index="{{ item.product.id }}">
+                                <i class="bi bi-plus-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div id="empty-cart-msg" class="text-center py-5 opacity-50">
+                    <i class="bi bi-basket display-4"></i>
+                    <p class="mt-2 small">Cart is empty</p>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* Makes the sidebar stick to the top of the viewport */
+    .sticky-sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh; /* Takes full viewport height */
+        overflow: hidden; /* Prevents double scrollbars */
+        display: flex;
+        flex-direction: column;
+        z-index: 100;
+    }
+    
+    /* Makes just the list part scrollable */
+    .cart-scroll-area {
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+    
+    .product-card-hover:hover {
+        transform: translateY(-3px);
+        transition: transform 0.2s ease;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    // 1. ADD / INCREMENT
+    $(document).on('click', '.add-to-cart-btn, .cart-increment', function(e){
+        e.preventDefault();
+        var productid = $(this).data('index');
+        
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'cart_add' %}",
+            data: {
+                productid: productid,
+                csrfmiddlewaretoken: csrftoken,
+                action: 'post'
+            },
+            success: function(json){
+                // Update Total Price
+                $('#cart-subtotal').text(json.cart_total + ' Frw');
+                
+                // Hide empty message if it exists
+                $('#empty-cart-msg').hide();
+
+                // CHECK: Does the row exist?
+                if ($('#row-' + productid).length > 0) {
+                    // YES: Just update the number
+                    $('#qty-' + productid).text(json.qty);
+                } else {
+                    // NO: We must BUILD the HTML row dynamically (No Refresh!)
+                   var newRow = `
+                        <div class="card border-0 shadow-sm mb-2 cart-item-row" id="row-${json.product.id}" data-index="${json.product.id}">
+                            <div class="card-body p-2 text-center position-relative">
+                                
+                                <button class="btn btn-link text-danger p-0 position-absolute top-0 end-0 me-2 mt-1 cart-remove" 
+                                        data-index="${json.product.id}" style="font-size: 0.9rem;">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+
+                                <img src="${json.product.image}" class="mb-2 rounded" style="width: 60px; height: 60px; object-fit: contain;">
+                                
+                                <h6 class="card-title small fw-bold text-truncate mb-1 px-2">${json.product.name}</h6>
+                                
+                                <p class="text-muted small mb-2">${json.product.price} Frw</p>
+
+                                <div class="d-flex justify-content-center align-items-center bg-light rounded-pill border mx-auto" style="width: 100px;">
+                                    <button class="btn btn-lg text-secondary cart-decrement py-0" data-index="${json.product.id}">
+                                        <i class="bi bi-dash-lg"></i>
+                                    </button>
+                                    
+                                    <span class="fw-bold small mx-2" id="qty-${json.product.id}">${json.qty}</span>
+                                    
+                                    <button class="btn btn-lg text-primary cart-increment py-0" data-index="${json.product.id}">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    `;
+                    // Append new row to the container
+                    $('#cart-items-container').prepend(newRow); // Prepend puts it at the top
+                }
+            },
+            error: function(xhr, errmsg, err){
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
+
+    // 2. DECREMENT
+    $(document).on('click', '.cart-decrement', function(e){
+        e.preventDefault();
+        var productid = $(this).data('index');
+        
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'cart_decrement' %}",
+            data: {
+                productid: productid,
+                csrfmiddlewaretoken: csrftoken,
+                action: 'post'
+            },
+            success: function(json){
+                $('#qty-' + productid).text(json.qty);
+                $('#cart-subtotal').text(json.cart_total + ' Frw');
+            }
+        });
+    });
+
+    // 3. REMOVE
+    $(document).on('click', '.cart-remove', function(e){
+        e.preventDefault();
+        var productid = $(this).data('index');
+        
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'cart_remove' %}",
+            data: {
+                productid: productid,
+                csrfmiddlewaretoken: csrftoken,
+                action: 'post'
+            },
+            success: function(json){
+                // Remove HTML
+                $('#row-' + productid).remove();
+                // Update Total
+                $('#cart-subtotal').text(json.cart_total + ' Frw');
+                // If empty, show message
+                if(json.cart_qty == 0) {
+                   $('#cart-items-container').html('<div id="empty-cart-msg" class="text-center py-5 opacity-50"><i class="bi bi-basket display-4"></i><p class="mt-2 small">Cart is empty</p></div>');
+                }
+            }
+        });
+    });
+</script>
+{% endblock content %}

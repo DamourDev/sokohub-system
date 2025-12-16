@@ -8,6 +8,8 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from .forms import MultipleFileInput
 from django import forms
+from django.http import JsonResponse
+from .cart import Cart 
 from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your views here.
@@ -233,3 +235,98 @@ def edit_product(request, pk):
     }
 
     return render(request, 'products/product_form.html',context)
+
+
+def related_products_list(request, pk):
+    source_product = get_object_or_404(Product, pk=pk)
+    category = source_product.category
+    related_list = Product.objects.filter(category=category)
+    
+    paginator = Paginator(related_list, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)  
+
+    context = {
+        'products': page_obj,
+        'page_obj': page_obj,
+        'source_product': source_product,
+        'related_list': related_list,
+        'category': category,
+    }
+
+    return render(request, 'products/related_products_list.html', context)
+
+
+
+# 1. ADD / INCREMENT View
+def cart_add(request):
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('productid'))
+        product = get_object_or_404(Product, id=product_id)
+        
+        # Add to cart (Logic: +1)
+        cart.add(product=product)
+        
+        # Get updated data to send back to JS
+        cart_qty = cart.__len__()
+        cart_total = cart.get_total_price()
+        
+        # Use the session dictionary to find the quantity of THIS specific item
+        # We need this so the number between (-) and (+) updates instantly
+        item_qty = cart.cart[str(product_id)]['quantity']
+        image_url = product.image.url if product.image else 'No image available'
+        response = JsonResponse({
+            'qty': item_qty, 
+            'cart_qty': cart_qty, 
+            'cart_total': cart_total,
+            'product': 
+            {
+                'id': product.id,
+                'name': product.name,
+                'price': product.price,
+                'image': image_url,
+            }
+
+        })
+        return response
+
+# 2. DECREMENT View
+def cart_decrement(request):
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('productid'))
+        product = get_object_or_404(Product, id=product_id)
+        
+        # Decrease quantity (Logic: -1, stops at 1)
+        cart.decrement(product=product)
+        
+        cart_qty = cart.__len__()
+        cart_total = cart.get_total_price()
+        item_qty = cart.cart[str(product_id)]['quantity']
+        
+        response = JsonResponse({
+            'qty': item_qty,
+            'cart_qty': cart_qty,
+            'cart_total': cart_total
+        })
+        return response
+
+# 3. REMOVE View
+def cart_remove(request):
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('productid'))
+        product = get_object_or_404(Product, id=product_id)
+        
+        # Remove completely
+        cart.remove(product)
+        
+        cart_qty = cart.__len__()
+        cart_total = cart.get_total_price()
+        
+        response = JsonResponse({
+            'cart_qty': cart_qty, 
+            'cart_total': cart_total
+        })
+        return response

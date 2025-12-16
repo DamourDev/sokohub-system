@@ -21,9 +21,9 @@
     <!-- Products grid -->
     <div class="row">
         {% for product in products %}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card h-100 shadow-sm rounded-4">
-                    <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark">
+                    <a href="{% url 'related_products_list' product.pk %}" class="text-decoration-none text-dark">
                         {% if product.image %}
                             <img src="{{ product.image.url }}" class="card-img-top" style="height:200px; object-fit:contain;" alt="{{ product.name }}">
                         {% else %}

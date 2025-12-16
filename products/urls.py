@@ -11,4 +11,8 @@ urlpatterns = [
     path('product/delete/<int:pk>/', views.delete_product, name='delete_product'),
     path('vendor-products/', views.vendor_products_list, name='vendor_products_list'),
     path('vendor/<int:vendor_id>/products/', views.vendor_public_products, name='vendor_public_products'),
+    path('related-products/<int:pk>/', views.related_products_list, name='related_products_list'),
+    path('cart/add/', views.cart_add, name='cart_add'),
+    path('cart/decrement/', views.cart_decrement, name='cart_decrement'),
+    path('cart/remove/', views.cart_remove, name='cart_remove'),
 ]
