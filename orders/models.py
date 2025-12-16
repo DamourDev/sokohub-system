@@ -8,7 +8,25 @@ class Order(models.Model):
         ('processing', 'Processing'),
         ('delivered', 'Delivered'),
         ('cancelled', 'Cancelled'),
+        ('shipped', 'Shipped'),
     )
+
+    parent =  models.ForeignKey(
+        'self', 
+        related_name='sub_orders',    
+        on_delete=models.CASCADE, 
+        blank=True,
+        null=True
+    )
+
+    vendor = models.ForeignKey(
+        CustomUser,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='vendor_orders' 
+    )
+    
     
     customer = models.ForeignKey(
         CustomUser, 
@@ -27,8 +45,9 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Order #{self.id} placed by {self.customer.username} is {self.status}"
-
+        if self.parent:
+            return f"Sub-Order #{self.id} for {self.vendor} (Parent #{self.parent.id})"
+        return f"Main Order #{self.id} by {self.customer}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(

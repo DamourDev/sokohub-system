@@ -79,7 +79,7 @@
             <hr class="my-4">
 
             {% if product.stock > 0 %}
-                <form action="{% url 'checkout' product.pk %}" method="GET">
+                <form action="{% url 'checkout' %}" method="GET">
                     {% csrf_token %}
                     
                     <div class="mb-3">

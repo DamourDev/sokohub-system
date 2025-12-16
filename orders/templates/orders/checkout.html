@@ -2,40 +2,212 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container py-5">
 
-    <!-- Breadcrumb -->
-    <nav>
+    <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'products_list' %}">Products</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'product_detail' product.pk %}">{{ product.name }}</a></li>
-            <li class="breadcrumb-item active">Checkout</li>
+            <li class="breadcrumb-item"><a href="{% url 'products_list' %}" class="text-decoration-none">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Checkout</li>
         </ol>
     </nav>
 
-    <h2 class="mb-4">Checkout</h2>
+    <h2 class="fw-bold mb-4">Secure Checkout</h2>
 
-    <!-- Order Summary -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5>Order Summary</h5>
-            <p><strong>Product:</strong> {{ product.name }}</p>
-            <p><strong>Unit Price:</strong> {{ product.price }} RWF</p>
-            <p><strong>Quantity:</strong> {{ quantity }}</p>
-            <p><strong>Total:</strong> {{total}} RWF</p>
-        </div>
-    </div>
-
-    <!-- Checkout Form -->
-    <form method="POST">
+    <form method="POST" action="">
         {% csrf_token %}
-        {{ form.as_p }}
         
-        
-        <input type="hidden" name="quantity" value="{{ quantity }}">
+        <div class="row g-5"> <div class="col-lg-6">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-truck me-2"></i>Shipping Details</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        
+                        <div class="mb-4">
+                            <label for="{{ form.delivery_address.id_for_label }}" class="form-label fw-bold">Delivery Address</label>
+                            <input type="text" name="delivery_address" 
+                                   class="form-control form-control-lg bg-light" 
+                                   id="{{ form.delivery_address.id_for_label }}" 
+                                   value="{{ form.delivery_address.value|default_if_none:'' }}" 
+                                   placeholder="Street, City, District..." required>
+                        </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Place Order</button>
+                        <div class="mb-4">
+                            <label for="{{ form.phone.id_for_label }}" class="form-label fw-bold">Phone Number</label>
+                            <input type="number" name="phone" 
+                                   class="form-control form-control-lg bg-light" 
+                                   id="{{ form.phone.id_for_label }}" 
+                                   value="{{ form.phone.value|default_if_none:'' }}" 
+                                   placeholder="07..." required>
+                        </div>
+
+                        <div class="alert alert-light border d-flex align-items-center" role="alert">
+                            <i class="bi bi-info-circle-fill text-primary me-3 fs-4"></i>
+                            <div>
+                                <small class="text-muted">Items will be split into separate packages based on the vendor.</small>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm position-sticky" style="top: 20px;">
+                    <div class="card-header bg-primary text-white py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-cart3 me-2"></i>Order Summary</h5>
+                        <span class="badge bg-white text-primary rounded-pill" id="cart-count-badge">{{ cart|length }} Items</span>
+                    </div>
+                    
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush" id="checkout-cart-container" style="max-height: 500px; overflow-y: auto;">
+                            
+                            {% for item in cart %}
+                            <div class="list-group-item p-3 cart-item-row" id="row-{{ item.product.id }}">
+                                <div class="d-flex align-items-center gap-3">
+                                    
+                                    <div style="width: 80px; height: 80px; flex-shrink: 0;">
+                                        {% if item.product.image %}
+                                            <img src="{{ item.product.image.url }}" class="w-100 h-100 rounded border p-1" style="object-fit: contain;">
+                                        {% else %}
+                                            <img src="{% static 'images/placeholder.png' %}" class="w-100 h-100 rounded border p-1">
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h6 class="mb-0 fw-bold text-dark">{{ item.product.name }}</h6>
+                                                <small class="text-muted">Vendor: {{ item.product.vendor.username }}</small>
+                                            </div>
+                                            <button type="button" class="btn btn-link text-danger p-0 cart-remove" data-index="{{ item.product.id }}">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="d-flex justify-content-between align-items-end mt-2">
+                                            <span class="text-primary fw-bold">{{ item.product.price }} Frw</span>
+                                            
+                                            <div class="d-flex align-items-center bg-light rounded border px-1">
+                                                <button type="button" class="btn btn-sm px-2 text-secondary cart-decrement" data-index="{{ item.product.id }}">
+                                                    <i class="bi bi-dash-lg"></i>
+                                                </button>
+                                                <span class="fw-bold mx-2" id="qty-{{ item.product.id }}" style="min-width: 20px; text-align: center;">{{ item.quantity }}</span>
+                                                <button type="button" class="btn btn-sm px-2 text-primary cart-increment" data-index="{{ item.product.id }}">
+                                                    <i class="bi bi-plus-lg"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-white p-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Subtotal</span>
+                            <span class="fw-bold fs-5" id="checkout-subtotal">{{ cart.get_total_price }} Frw</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="text-muted">Shipping</span>
+                            <span class="text-success fw-bold">Free</span>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg shadow-sm fw-bold py-3" id="place-order-btn">
+                                CONFIRM ORDER <i class="bi bi-check-circle-fill ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </form>
-
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    $(document).on('click', '.cart-increment', function(e){
+        e.preventDefault();
+        var productid = $(this).data('index');
+        
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'cart_add' %}",
+            data: { productid: productid, csrfmiddlewaretoken: csrftoken, action: 'post' },
+            success: function(json){
+                // Update Quantity of Item
+                $('#qty-' + productid).text(json.qty);
+                // Update Subtotal price
+                $('#checkout-subtotal').text(json.cart_total + ' Frw');
+                
+                // NEW: Update the Total Items Badge
+                $('#cart-count-badge').text(json.cart_qty + ' Items');
+            }
+        });
+    });
+
+    // 2. DECREMENT
+    $(document).on('click', '.cart-decrement', function(e){
+        e.preventDefault();
+        var productid = $(this).data('index');
+        
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'cart_decrement' %}",
+            data: { productid: productid, csrfmiddlewaretoken: csrftoken, action: 'post' },
+            success: function(json){
+                $('#qty-' + productid).text(json.qty);
+                $('#checkout-subtotal').text(json.cart_total + ' Frw');
+                
+                // NEW: Update the Total Items Badge
+                $('#cart-count-badge').text(json.cart_qty + ' Items');
+            }
+        });
+    });
+
+    // 3. REMOVE (This was already correct, but here it is for completeness)
+    $(document).on('click', '.cart-remove', function(e){
+        e.preventDefault();
+        var productid = $(this).data('index');
+        
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'cart_remove' %}",
+            data: { productid: productid, csrfmiddlewaretoken: csrftoken, action: 'post' },
+            success: function(json){
+                $('#row-' + productid).remove();
+                $('#checkout-subtotal').text(json.cart_total + ' Frw');
+                
+                // Update Badge
+                $('#cart-count-badge').text(json.cart_qty + ' Items');
+
+                if(json.cart_qty == 0) {
+                   $('#checkout-cart-container').html('<div class="text-center py-5 text-muted">Your cart is empty. <br><a href="{% url "products_list" %}">Go Shopping</a></div>');
+                   $('#place-order-btn').prop('disabled', true);
+                }
+            }
+        });
+    });
+</script>
 {% endblock %}

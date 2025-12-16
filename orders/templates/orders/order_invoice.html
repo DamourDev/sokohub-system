@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+        <a href="{% url 'products_list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Shopping
+        </a>
+        <button onclick="window.print()" class="btn btn-primary">
+            <i class="bi bi-printer"></i> Print Invoice
+        </button>
+    </div>
+
+    <div class="card border-0 shadow-lg" id="printable-area" style="max-width: 900px; margin: 0 auto;">
+        <div class="card-body p-5">
+            
+            <div class="d-flex justify-content-between align-items-start border-bottom pb-4 mb-4">
+                <div>
+                    <h2 class="fw-bold text-primary mb-1" style="color: #0d6efd !important;">INVOICE</h2>
+                    <p class="text-muted mb-0">Order #{{ order.id }}</p>
+                </div>
+                <div class="text-end">
+                    {% if order.status == 'pending' %}
+                        <span style="background-color: #ffc107; color: black; padding: 8px 16px; border-radius: 4px; font-weight: bold; font-size: 14px;">PAYMENT PENDING</span>
+                    {% elif order.status == 'delivered' %}
+                        <span style="background-color: #198754; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold; font-size: 14px;">DELIVERED</span>
+                    {% else %}
+                        <span style="background-color: #6c757d; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold; font-size: 14px;">{{ order.status|upper }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-6">
+                    <h6 class="text-uppercase fw-bold small text-muted">Billed To:</h6>
+                    <div style="font-size: 16px;">
+                        <p class="mb-0 fw-bold">{{ order.customer.username|title }}</p>
+                        <p class="mb-0">{{ order.delivery_address }}</p>
+                        <p class="mb-0">Phone: {{ order.phone }}</p>
+                        <p class="mb-0">{{ order.customer.email }}</p>
+                    </div>
+                </div>
+                <div class="col-6 text-end">
+                    <h6 class="text-uppercase fw-bold small text-muted">Order Date:</h6>
+                    <p class="fw-bold fs-5 mb-0">{{ order.created_at|date:"M d, Y" }}</p>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <table class="table" style="width: 100%; border-collapse: collapse; border: 1px solid #dee2e6;">
+                    <thead>
+                        <tr style="background-color: #0d6efd !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
+                            <th scope="col" style="padding: 12px; border: 1px solid #0b5ed7;">Item Description</th>
+                            <th scope="col" style="padding: 12px; border: 1px solid #0b5ed7; text-align: center;">Vendor</th>
+                            <th scope="col" style="padding: 12px; border: 1px solid #0b5ed7; text-align: center;">Qty</th>
+                            <th scope="col" style="padding: 12px; border: 1px solid #0b5ed7; text-align: right;">Price</th>
+                            <th scope="col" style="padding: 12px; border: 1px solid #0b5ed7; text-align: right;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">
+                                <span class="fw-bold">{{ item.product.name }}</span>
+                            </td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6; text-align: center; font-size: 14px; color: #6c757d;">
+                                {{ item.product.vendor.username }}
+                            </td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6; text-align: center;">
+                                {{ item.quantity}}
+                            </td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6; text-align: right;">
+                                {{ item.price }} Frw
+                            </td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6; text-align: right; font-weight: bold;">
+                                {% widthratio item.price 1 item.quantity %} Frw
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row justify-content-end">
+                <div class="col-md-5 col-lg-4">
+                    <div class="d-flex justify-content-between mb-2" style="border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        <span class="text-muted">Subtotal:</span>
+                        <span class="fw-bold">{{ order.total }} Frw</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2" style="border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        <span class="text-muted">Shipping:</span>
+                        <span class="text-success">Free</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="h5 mb-0 fw-bold">Grand Total:</span>
+                        <span class="h4 mb-0 fw-bold text-primary">{{ order.total }} Frw</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 pt-4 border-top text-center text-muted small">
+                <p class="mb-1">Thank you for your business!</p>
+                <p>For support, please contact: support@example.com</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media print {
+        /* 1. HIDE EVERYTHING */
+        body * {
+            visibility: hidden;
+        }
+
+        /* 2. SHOW ONLY INVOICE */
+        #printable-area, #printable-area * {
+            visibility: visible;
+        }
+
+        /* 3. POSITION IT AT TOP LEFT */
+        #printable-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important; /* Remove shadow for print */
+        }
+
+        /* 4. FORCE BACKGROUND COLORS (Important for the Blue Header) */
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* 5. PREVENT TABLE SPLITTING */
+        tr {
+            page-break-inside: avoid;
+        }
+    }
+</style>
+{% endblock %}
