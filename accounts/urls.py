@@ -1,10 +1,25 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from allauth.account import views as allauth_views
+from allauth.account.views import SignupView, LoginView, LogoutView
+
+
 
 urlpatterns = [
-    path('register/', views.register, name='register'),
-    path('login/', views.login_view, name='login'),
+    path('register/', SignupView.as_view(
+        template_name='accounts/register.html',
+       
+    
+    ), name='register'),
+
+    path('login/', LoginView.as_view(
+        template_name='accounts/login.html',
+        
+        
+
+    ), name='login'),
+
     path('logout/', views.logout_view, name='logout'),
     path('verify-mfa/', views.verify_mfa, name='verify_mfa'),
     path('settings/profile/', views.edit_profile, name='edit_profile'),

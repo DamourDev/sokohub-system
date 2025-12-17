@@ -45,18 +45,52 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
+    'django.contrib.sites',
+
     'products',
     'orders',
     'django_otp',
     'django_otp.plugins.otp_totp',
+    
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 ]
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, etc.
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# --- ALLAUTH CONFIGURATION ---
+
+# Redirects
+LOGIN_REDIRECT_URL = '/'          # Where to go after a successful login
+# LOGOUT_REDIRECT_URL = '/login/'   # Where to go after logout
+
+# Email & Username Configuration
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False # We don't ask for a username, we generate it
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email' # Optional: Allows login with email
+ACCOUNT_EMAIL_VERIFICATION = 'optional' # 'mandatory' if you want to force email confirmation
+
+# Social Account Config
+SOCIALACCOUNT_QUERY_EMAIL = True  # Ask Google for the email
+SOCIALACCOUNT_AUTO_SIGNUP = False  # Attempt to create the user immediately
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,6 +101,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'sokohub.urls'
@@ -85,6 +120,34 @@ TEMPLATES = [
         },
     },
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For version > 0.61.0, use this structure. 
+        'APP': {
+            'client_id': '57696819800-thv6q1kd5a9rgfgtbrb362dve96codhf.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+ACCOUNT_ADAPTER = 'accounts.adapter.MyAccountAdapter'
+
+# Handles Google/Social signup button choices
+SOCIALACCOUNT_ADAPTER = 'accounts.adapter.MySocialAccountAdapter'
+
+ACCOUNT_FORMS = {
+    'signup': 'accounts.forms.CustomSignupForm',
+    'login': 'accounts.forms.CustomLoginForm',  # <--- Add this line
+}
 
 WSGI_APPLICATION = 'sokohub.wsgi.application'
 

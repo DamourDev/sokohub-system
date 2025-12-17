@@ -1,76 +1,79 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate
+from allauth.account.forms import SignupForm, LoginForm
 from .models import CustomUser
 
-class RegistrationForm(UserCreationForm):
+
+class CustomSignupForm(SignupForm):
+    # 1. DEFINE YOUR CUSTOM FIELDS
+    # (Username, Email, Password are handled automatically by the parent SignupForm)
+    
     USER_TYPE_CHOICES = (
         ('vendor', 'Vendor'),
         ('customer', 'Customer')
     )
 
-    email = forms.EmailField(
-        required=True,
-        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'} 
-    ))
     user_type = forms.ChoiceField(
-            choices=USER_TYPE_CHOICES,  
-            widget=forms.Select(attrs={'class': 'form-control'})
-        )
+        choices=USER_TYPE_CHOICES,
+        widget=forms.Select(), 
+    )
+    
     phone = forms.CharField(
-        required=True, 
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'})
-    )   
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': '07....'})
+    )
+    
     location = forms.CharField(
         required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Location'})
+        widget=forms.TextInput(attrs={'placeholder': 'Location'})
     )
 
-    class Meta:
-        model = CustomUser
-        fields = ('username', 'email', 'phone', 'location', 'user_type', 'password1', 'password2')
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'id':'id_password1','placeholder': 'Password'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'id': 'id_password2','placeholder': 'Confirm Password'}),
-        }
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if CustomUser.objects.filter(email=email).exists():
-            raise forms.ValidationError("Email address must be unique.")
-        return email
-    
+    def __init__(self, *args, **kwargs):
+        """
+        This matches your old widget logic:
+        It adds 'class="form-control"' to every field (including Username/Password)
+        so they look exactly like your old form.
+        """
+        super(CustomSignupForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            
+            # Use the field's label as a placeholder if one isn't set
+            if not field.widget.attrs.get('placeholder'):
+                field.widget.attrs['placeholder'] = field.label
 
+    def save(self, request):
+        # 1. Let allauth create the user object
+        user = super(CustomSignupForm, self).save(request)
+        
+        # 2. Add your custom data
+        user.phone = self.cleaned_data['phone']
+        user.location = self.cleaned_data['location']
+        user.user_type = self.cleaned_data['user_type']
+        
+        # 3. Save to database
+        user.save()
+        return user
 
-class LoginForm(forms.Form):
-    username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'})
-    )
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'})
-    )
-    remember_me = forms.BooleanField(
-        required=False,
-        widget=forms.CheckboxInput(
-            attrs={'class': 'form-check-input border-dark rounded-1'}
-        )
-    )
-    def clean(self):
-        cleaned_data = super().clean() # Call the base class cleaning method from forms.Form
-        username = cleaned_data.get('username')
-        password = cleaned_data.get('password')
-
-        if username and password:
-            user = authenticate(username=username, password=password)
-            if not user:
-                raise forms.ValidationError("Invalid username or password.")
-        return cleaned_data
-    
-
+class CustomLoginForm(LoginForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomLoginForm, self).__init__(*args, **kwargs)
+        
+        # Style the 'login' field (Username/Email)
+        self.fields['login'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Username or Email'
+        })
+        
+        # Style the 'password' field
+        self.fields['password'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Password'
+        })
+# We keep your UserUpdateForm exactly as it was for profile editing
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email',  'phone', 'location']
+        fields = ['username', 'email', 'phone', 'location']
         
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),

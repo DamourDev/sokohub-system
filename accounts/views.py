@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RegistrationForm, LoginForm
+# from .forms import RegistrationForm, LoginForm
 from django.contrib.auth import authenticate, login,logout 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -21,108 +21,6 @@ User = get_user_model()
 
 
 # Create your views here.
-
-def register(request):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST) 
-        if form.is_valid(): 
-            user = form.save()
-
-            if user.email:
-                subject = 'Welcome to SokoHub!'
-                message = f"Hi {user.username},\n\nCongratulations! You are now a registered member of SokoHub.\n\nYou can now browse products and place orders.\n\nThank you for joining us!"
-                from_email = settings.EMAIL_HOST_USER
-                recipient_list = [user.email]
-
-                try:
-                    send_mail(subject, message, from_email, recipient_list)
-                except Exception as e:
-                    print(f"Error sending email: {e}")
-
-            messages.success(request, "Account created successfully! Welcome to SokoHub.")
-            
-            login(request, user)  # Log the user in after registration
-
-            if user.user_type == 'vendor':
-                return redirect('vendor_dashboard')  # Redirect to vendor dashboard
-            else:
-                return redirect('products_list')  # Redirect to product listing for customers
-        
-        else:
-            messages.error(request, "Please correct the errors below.")
-    else:
-        form = RegistrationForm()
-    return render(request, 'accounts/register.html', {'form': form}) 
-
-
-
-def login_view(request):
-    if request.user.is_authenticated:
-
-        if request.user.user_type == 'vendor':
-            return redirect('vendor_dashboard')
-        else:
-            return redirect('products_list')
-        
-    form = LoginForm(request.POST or None) 
-
-    if request.method == 'POST':
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            remember_me = form.cleaned_data.get('remember_me')
-
-            user = authenticate(username=username, password=password)
-
-            if user:
-
-                if user.mfa_enabled:
-                    request.session['pre_mfa_user_id'] = user.id
-
-                    if user.mfa_method == 'email':
-                        
-                        otp, _ = EmailOTP.objects.get_or_create(user=user)
-                        otp.generate_code()
-
-                        if user.email:
-                            try:
-                                send_mail(
-                                    'SokoHub Verification Code',
-                                    f'Your code is: {otp.otp_code}',
-                                    settings.EMAIL_HOST_USER,
-                                    [user.email],
-                                    fail_silently=False
-                                )
-                                messages.info(request, "Code sent to your email.")
-                            except Exception as e:
-                                messages.error(request, "Email failed to send.")
-                        
-                        return redirect('verify_mfa')
-                    
-                    elif user.mfa_method == 'app':
-                        return redirect('verify_mfa')
-                    
-                login(request, user)
-
-                # Handle "Remember Me"
-                if remember_me:
-                    request.session.set_expiry(3600)  # 1 hour
-                else:
-                    request.session.set_expiry(0)  # Session expires on browser close
-
-                messages.success(request, f"Welcome back, {user.username}!")
-
-                # Redirect based on user_type
-                if user.user_type == 'vendor':
-                    return redirect('vendor_dashboard')
-                else:
-                    return redirect('products_list')
-            else:
-                # Form validation already handles this, but extra safety
-                messages.error(request, "Invalid username or password.")
-
-    context = {'form': form}
-    return render(request, 'accounts/login.html', context)
 
 
 @login_required
@@ -169,23 +67,21 @@ def enable_app_mfa(request):
     return render(request, 'accounts/enable_app_mfa.html', context)
 
 
-
-
+@login_required 
 def verify_mfa(request):
-    user_id = request.session.get('pre_mfa_user_id')
+    # 1. Use the currently logged-in user (Allauth did this for us)
+    user = request.user
     
-    if not user_id:
-        return redirect('login')
-    
-    user = User.objects.get(id=user_id)
-    
+    # Safety Check: If user has no MFA method, they shouldn't be here
+    if not hasattr(user, 'mfa_method') or not user.mfa_method:
+         return redirect('products_list') # Or default dashboard
+
     if request.method == 'POST':
         code = request.POST.get('otp_code')
         is_verified = False
 
         # Check the code based on their method
         if user.mfa_method == 'app':
-
             # Check against TOTP
             device = TOTPDevice.objects.filter(user=user, confirmed=True).first()
             if device and device.verify_token(code):
@@ -194,20 +90,23 @@ def verify_mfa(request):
         elif user.mfa_method == 'email':
             # Check against Email OTP
             try:
-               
-                if user.email_otp.is_valid() and user.email_otp.otp_code == code:
+                # Access the related email_otp object
+                # Note: Ensure your user model has a OneToOne or Reverse relation to EmailOTP
+                # If 'email_otp' is not the related_name, use the correct one (e.g., user.emailotp_set.first())
+                if hasattr(user, 'email_otp') and user.email_otp.is_valid() and user.email_otp.otp_code == code:
                     is_verified = True
-            except EmailOTP.DoesNotExist:
-                print ("No EmailOTP found for user.")
+            except Exception as e:
+                print(f"MFA Error: {e}")
                 is_verified = False
 
-        
         if is_verified:
-            # SUCCESS: Log he/she in and clear the session
-            login(request, user)
-            del request.session['pre_mfa_user_id']
+            # 2. SUCCESS: User is already logged in, so we don't need login(request, user)
+            
+            # Optional: Set a session flag to know they passed MFA (useful for middleware)
+            request.session['is_mfa_verified'] = True
             
             messages.success(request, "Verification successful!")
+            
             if user.user_type == 'vendor':
                 return redirect('vendor_dashboard')
             else:
@@ -216,13 +115,10 @@ def verify_mfa(request):
             messages.error(request, "Invalid code. Please try again.")
 
     context = {
-        'mfa_method': user.mfa_method,
-        
+        'mfa_method': user.mfa_method,   
     }
 
     return render(request, 'accounts/verify_mfa.html', context)
-
-
 
 @login_required
 def disable_mfa(request):

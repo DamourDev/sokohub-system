@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+    <div class="card shadow-lg border-0" style="max-width: 500px; width: 100%; border-radius: 15px;">
+        <div class="card-body p-5 text-center">
+            <h2 class="fw-bold text-primary mb-2">Final Step</h2>
+            <p class="text-muted mb-4">Select your account type to continue.</p>
+
+            <form id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                <div class="alert alert-danger p-2 small text-start">
+                    {% for field, errors in form.errors.items %}
+                        <strong>{{ field }}:</strong> {{ errors|join:", " }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <input type="hidden" name="username" value="{{ form.username.value|default:form.initial.username }}">
+                <input type="hidden" name="email" value="{{ form.email.value|default:form.initial.email }}">
+
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <button type="submit" name="selected_user_type" value="customer" 
+                                class="btn btn-outline-primary w-100 py-4 shadow-sm h-100 d-flex flex-column align-items-center">
+                            <i class="bi bi-cart4 mb-2 fs-3"></i>
+                            <span class="fw-bold">As Customer</span>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" name="selected_user_type" value="vendor" 
+                                class="btn btn-outline-primary w-100 py-4 shadow-sm h-100 d-flex flex-column align-items-center">
+                            <i class="bi bi-shop mb-2 fs-3"></i>
+                            <span class="fw-bold">As Vendor</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
