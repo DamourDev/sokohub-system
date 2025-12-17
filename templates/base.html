@@ -50,6 +50,63 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Page-specific JS -->
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const resultsDropdown = document.getElementById('search-results-dropdown');
+            const searchClear = document.getElementById('search-clear');
+
+            searchInput.addEventListener('input', function() {
+                const query = this.value;
+
+                if (query.length > 0) {
+                    searchClear.classList.remove('d-none');
+                } else {
+                    searchClear.classList.add('d-none');
+                }
+
+                if (query.length > 1) {
+                    const url = searchInput.getAttribute('data-url');
+                        fetch(`${url}?q=${query}`)
+                        .then(response => response.json())
+                        .then(res => {
+                            resultsDropdown.innerHTML = '';
+                            if (res.data && res.data.length > 0) {
+                                resultsDropdown.classList.remove('d-none');
+                                res.data.forEach(item => {
+                                    resultsDropdown.innerHTML += `
+                                        <a href="${item.url}" class="list-group-item list-group-item-action border-0 py-2">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="fw-medium">${item.name}</span>
+                                                <span class="text-primary small">RWF ${item.price}</span>
+                                            </div>
+                                        </a>`;
+                                });
+                            } else {
+                                resultsDropdown.classList.add('d-none');
+                            }
+                        })
+                        .catch(err => console.error("Search Error:", err));
+                } else {
+                    resultsDropdown.classList.add('d-none');
+                }
+            });
+
+            searchClear.addEventListener('click', function() {
+                searchInput.value = '';
+                resultsDropdown.classList.add('d-none');
+                this.classList.add('d-none');
+                searchInput.focus();
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !resultsDropdown.contains(e.target)) {
+                    resultsDropdown.classList.add('d-none');
+                }
+            });
+        });
+    </script>
+    {% endblock %}
 </body>
 </html>

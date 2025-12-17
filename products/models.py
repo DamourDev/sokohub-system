@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import CustomUser 
+from django.urls import reverse
 
 class Category(models.Model):
     # Self-referential foreign key for hierarchical categories
@@ -60,6 +61,8 @@ class Product(models.Model):
     unit = models.CharField(max_length=20, blank=True, null=True)
     is_deleted = models.BooleanField(default=False)
 
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[str(self.id)])
 
     def __str__(self):
         return f"{self.name} by {self.vendor.username}"

@@ -79,18 +79,18 @@ AUTHENTICATION_BACKENDS = [
 # --- ALLAUTH CONFIGURATION ---
 
 # Redirects
-LOGIN_REDIRECT_URL = '/'          # Where to go after a successful login
-# LOGOUT_REDIRECT_URL = '/login/'   # Where to go after logout
+LOGIN_REDIRECT_URL = '/'          
+LOGOUT_REDIRECT_URL = '/login/'   
 
 # Email & Username Configuration
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False # We don't ask for a username, we generate it
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email' # Optional: Allows login with email
-ACCOUNT_EMAIL_VERIFICATION = 'optional' # 'mandatory' if you want to force email confirmation
+ACCOUNT_USERNAME_REQUIRED = False 
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email' 
+ACCOUNT_EMAIL_VERIFICATION = 'optional' 
 
 # Social Account Config
-SOCIALACCOUNT_QUERY_EMAIL = True  # Ask Google for the email
-SOCIALACCOUNT_AUTO_SIGNUP = False  # Attempt to create the user immediately
+SOCIALACCOUNT_QUERY_EMAIL = True  
+SOCIALACCOUNT_AUTO_SIGNUP = False  
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -146,7 +146,7 @@ SOCIALACCOUNT_ADAPTER = 'accounts.adapter.MySocialAccountAdapter'
 
 ACCOUNT_FORMS = {
     'signup': 'accounts.forms.CustomSignupForm',
-    'login': 'accounts.forms.CustomLoginForm',  # <--- Add this line
+    'login': 'accounts.forms.CustomLoginForm',  
 }
 
 WSGI_APPLICATION = 'sokohub.wsgi.application'

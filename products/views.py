@@ -10,6 +10,7 @@ from .forms import MultipleFileInput
 from django import forms
 from django.http import JsonResponse
 from .cart import Cart 
+from django.db.models import Q
 from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your views here.
@@ -330,3 +331,28 @@ def cart_remove(request):
             'cart_total': cart_total
         })
         return response
+    
+
+# This is for the LIVE dropdown (returns DATA only)
+def product_search_suggestions(request):
+    query = request.GET.get('q', '')
+    data = []
+    if len(query) > 1:
+        products = Product.objects.filter(
+            Q(name__icontains=query) | Q(category__name__icontains=query)
+        )[:8]
+        for p in products:
+            data.append({
+                'name': p.name,
+                'price': str(p.price),
+                'url': p.get_absolute_url()
+            })
+    return JsonResponse({'data': data})
+
+# This is for the MAIN results page (returns HTML)
+def product_search(request):
+    query = request.GET.get('q')
+    results = Product.objects.filter(
+        Q(name__icontains=query) | Q(description__icontains=query)
+    ) if query else []
+    return render(request, 'products/search_results.html', {'results': results, 'query': query})

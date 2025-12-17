@@ -7,6 +7,35 @@
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <div class="position-relative mx-lg-4 flex-grow-1" style="max-width: 500px;">
+    <form action="{% url 'product_search' %}" method="GET" class="d-flex" id="search-form">
+        <div class="input-group">
+            <input type="text" 
+                   name="q" 
+                   id="search-input" 
+                   data-url="{% url 'product_search_suggestions' %}" 
+                   class="form-control border-primary shadow-none" 
+                   placeholder="Search products..." 
+                   autocomplete="off">
+            
+            <span id="search-clear" 
+                  class="position-absolute d-none" 
+                  style="right: 50px; top: 50%; transform: translateY(-50%); cursor: pointer; z-index: 10;">
+                <i class="bi bi-x-lg text-muted"></i>
+            </span>
+
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </form>
+
+    <div id="search-results-dropdown" 
+         class="list-group position-absolute w-100 shadow-sm d-none" 
+         style="z-index: 1050; top: 100%; border-radius: 0 0 8px 8px; background: white;">
+    </div>
+</div>
     
     <div class="collapse navbar-collapse" id="navbarNav">
       
