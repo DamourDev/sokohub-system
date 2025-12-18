@@ -113,7 +113,17 @@ def products_list(request):
     
     products =  Product.objects.filter(status='active')
 
-    sort_option = request.POST.get('sort', 'newest')
+    sort_option = request.GET.get('sort', 'newest')
+    category_id = request.GET.get('category')
+    vendor_id = request.GET.get('vendor')
+
+    # 3. Apply Filters
+    if category_id:
+    # This finds the parent category AND all its direct sub-categories
+        categories = Category.objects.filter(id=category_id) | Category.objects.filter(parent_id=category_id)
+        products = products.filter(category__in=categories)
+    if vendor_id:
+        products = products.filter(vendor_id=vendor_id)
 
     if sort_option == 'price_low_to_high':
         products = products.order_by('price')
@@ -134,7 +144,12 @@ def products_list(request):
         'products': page_obj,
         'page_obj': page_obj, 
         'sort_option': sort_option,
+        'categories': Category.objects.all(),
+        'vendors': User.objects.filter(user_type='vendor'), # Fixed the error here
+        'current_category': category_id,
+        'current_vendor': vendor_id,
     }
+
 
     return render(request, 'products/products_list.html', context)
 
@@ -243,7 +258,7 @@ def related_products_list(request, pk):
     category = source_product.category
     related_list = Product.objects.filter(category=category)
     
-    paginator = Paginator(related_list, 12)
+    paginator = Paginator(related_list.order_by('-created_at'), 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)  
 

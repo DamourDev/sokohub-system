@@ -1,6 +1,9 @@
 from django import forms
 from allauth.account.forms import SignupForm, LoginForm
 from .models import CustomUser
+from django.core.mail import send_mail
+from django.conf import settings
+from django.template.loader import render_to_string
 
 
 class CustomSignupForm(SignupForm):
@@ -28,11 +31,7 @@ class CustomSignupForm(SignupForm):
     )
 
     def __init__(self, *args, **kwargs):
-        """
-        This matches your old widget logic:
-        It adds 'class="form-control"' to every field (including Username/Password)
-        so they look exactly like your old form.
-        """
+        
         super(CustomSignupForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
@@ -52,6 +51,21 @@ class CustomSignupForm(SignupForm):
         
         # 3. Save to database
         user.save()
+
+        subject = "Welcome to SokoHub!"
+        message = render_to_string('account/signup_success_email.html', {'user': user})
+        send_mail(
+            subject,
+            message,  # Plain text fallback
+            settings.EMAIL_HOST_USER,
+            [user.email],
+            html_message=message,  # Render HTML
+            fail_silently=True
+        )
+
+        if request is not None:
+            request.session['post_signup_redirect'] = 'vendor_dashboard' if user.user_type == 'vendor' else 'products_list'
+
         return user
 
 class CustomLoginForm(LoginForm):
