@@ -1,0 +1,774 @@
+[
+{
+    "model": "sessions.session",
+    "pk": "1k6p8i0jbch74yo77n1xsw1rnsoghlk0",
+    "fields": {
+        "session_data": ".eJxVjEEOgjAQRe_StWkK7UBh6d4zNNPOIFXTEgqJxnh3IWGh2__ef2_hcF1GtxaeXSTRCytOv5vHcOe0A7phumYZclrm6OWuyIMWecnEj_Ph_gVGLOP2Vlo3BgAtdsG0FTUtmQoGYgZVIWivGgVYq5p9vUELPFCwpDUHb6lr92jhUmJOjp9TnF-iV58vdSI_Eg:1vLJL4:aYvUV3zq80e0ZY6BDVeomwHLyJyzBMUcvFVhKOCoFCQ",
+        "expire_date": "2025-12-02T10:53:34.808Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "1xpsm7aolm0uv09zhj5vkxvd9h0c4l76",
+    "fields": {
+        "session_data": ".eJxVjMsOwiAQRf-FtSEUWx5duvcbyJRhLGrAQJtojP9uSbrQ7T3nnjdzsC6zW2soLiIbmWKH320CfwupAbxCumTuc1pKnHhT-E4rP2cM99Pu_gVmqPP2JuyVh0kH8gpRdQOi1J7IGk2WlFTGEAxKdCA6ag4ZuylHLUH2JGyL1lBrzMmF5yOWFxvF5wvc2UAk:1vMA8m:MFPP5XoD9FNtSM5HOjrIc2LlJNCcgBGI9mI3CFrhEBU",
+        "expire_date": "2025-12-04T19:16:24.162Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "2qemdloj3nvepoaxcr66qclxv6xwlqhd",
+    "fields": {
+        "session_data": ".eJxVjEEOgjAQRe_StWkK7UBh6d4zNNPOIFXTEgqJxnh3IWGh2__ef2_hcF1GtxaeXSTRCytOv5vHcOe0A7phumYZclrm6OWuyIMWecnEj_Ph_gVGLOP2Vlo3BgAtdsG0FTUtmQoGYgZVIWivGgVYq5p9vUELPFCwpDUHb6lr92jhUmJOjp9TnF-iV58vdSI_Eg:1vLRSC:Fng5Dlg1pZ7fVqLC9GwXYw382vJLteQTRstFrONl1IU",
+        "expire_date": "2025-12-02T19:33:28.371Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "4771hdu2qv12okdy0jdlh4rktzxmq0xj",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQRe_C2hCK7QBduvcMZMowFjXUlDbRGO9uSbrQ7X_vv7fwuC6jX0ucfSLRCxCH323AcIu5ArpivkwyTHmZ0yCrInda5HmieD_t7l9gxDJub6YWAg4mcgAiaDoibQKzs4YdgwZrGTtQDaqGq8PWbcrRaNQtK1ejJZaSpuzj85Hml-iPoNTnC520QL0:1vKXAf:UjJZXjYgydThneSX6ME2o5NlpdXdPITZok2zrcAXFcM",
+        "expire_date": "2025-11-16T08:27:37.324Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "501ltk2286jd4tcldjxhwnw3pj12mfkb",
+    "fields": {
+        "session_data": ".eJxVjMsOwiAUBf-FtSGUx6V06d5vIHABixpoSptojP-uNV3o9syceRLr1mW0a4uzzYEMpCeH3807vMaygXBx5Vwp1rLM2dNNoTtt9FRDvB139y8wujZ-3l3yCBy8VlxIiOhBJCVkJ40wnkumkmHQhwhBat1xLrRjvFfaIKLH9I222Fquxcb7lOcHGQQw9noDHzs_Jg:1vTFOx:3CLZWOBu7EFUDb8rMV1d2zS_RiJuUTgWScmQbLqGNh8",
+        "expire_date": "2025-12-10T09:18:23.243Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "50api0xv4wdjigi8hgxub39x06dl2ury",
+    "fields": {
+        "session_data": ".eJxVjEEOgjAQRe_StWkqQ2lh6Z4zNNOZiVRNaygkGuPdlYSFbv97_71UwHWZwlplDonVoJw6_G4R6Sp5A3zBfC6aSl7mFPWm6J1WPRaW22l3_wIT1un79owNQwud710kiyaCQRfFElBjWiAv1kbnHXjfWcAWfE8NRjZ87JFpi1apNZUc5HFP81MN0Bnz_gBBxT-o:1vMmp5:q7ioTqshiQbyeXPm-XSkPmZosU9NQOtmWxhT1Unm0rc",
+        "expire_date": "2025-11-22T13:34:39.229Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "bcko1f5q4cvj1hpwtuo0pnc3oclzceia",
+    "fields": {
+        "session_data": ".eJxVkMtugzAQRf9l1gj5hQ0sm3W_oIrQeGyK28SOsFFaIf69kGaT3WjOnSPNXQGJ0hLLgEuZfCyBsIQUh6svU3IZ-o8V_mfo4YY539PsoAIs0HOjNVeMKVN3kgumTQVL9nPEq9_TJ38JyGE7V_CwDwcbwiFq4WVnkb59PID7wviZakqxzMHWR6R-0ly_J-cvb8_si2DCPO3XfLSkhbamEVJpT1bLsZGKq052VijWjB3TrfPaKWO4ENIgE21jOiKyND6k2ed8FOB_bmH-hZ5VQDjv367b9gf_p2Li:1vWXiZ:vB0_zupjW-Kl1G6D_suBK51M4N-b8fkmelfY4xi_Ff8",
+        "expire_date": "2026-01-02T10:28:15.718Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "bn0w8c48t9q3ou3k38ftvkdzjtki58ys",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQRe_C2pCBwhRcuvcMzQCDVA0kpV0Z765NutDtf-_9l5hoW8u0dV6mOYmzUEacfsdA8cF1J-lO9dZkbHVd5iB3RR60y2tL_Lwc7t9BoV6-tUMC7RCCQRg5kkVlI8NoNSqV8ojRGWfBK5UH711gwmCyZhiisQRZvD_dlTdD:1vWclZ:pziqIpxO9R4RpFXlvaLSKZJL35lUC-h8Hwb5xLaGui8",
+        "expire_date": "2026-01-02T15:51:41.401Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "e56baqhper73pvjyge5040ma5n0etc8v",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQRe_C2hCK7QBduvcMZMowFjXUlDbRGO9uSbrQ7X_vv7fwuC6jX0ucfSLRCxCH323AcIu5ArpivkwyTHmZ0yCrInda5HmieD_t7l9gxDJub6YWAg4mcgAiaDoibQKzs4YdgwZrGTtQDaqGq8PWbcrRaNQtK1ejJZaSpuzj85Hml-iPoNTnC520QL0:1vKgVq:ZpweHAps17EDTbbpG7DfLuPhI9DU_VUxy5xoUz5b5Xo",
+        "expire_date": "2025-11-16T18:26:06.489Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "i5yucrs8107o8e4plhdaw0jz3b74tt6n",
+    "fields": {
+        "session_data": "e30:1vV1go:10sB5xpaXwC_knM5BmA6Zl2hNtugZNv9MRee03ikCH4",
+        "expire_date": "2025-12-29T06:04:10.988Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "itlinamhwtbb4le4tw09dlhte2af5t4z",
+    "fields": {
+        "session_data": ".eJxVjMsOwiAQRf-FtSEUWx5duvcbyJRhLGrAQJtojP9uSbrQ7T3nnjdzsC6zW2soLiIbmWKH320CfwupAbxCumTuc1pKnHhT-E4rP2cM99Pu_gVmqPP2JuyVh0kH8gpRdQOi1J7IGk2WlFTGEAxKdCA6ag4ZuylHLUH2JGyL1lBrzMmF5yOWFxvF5wvc2UAk:1vL5FH:qZfz52GAXqQvZ_14_5ve25rodSkSIXBjNqBE3r0kdco",
+        "expire_date": "2025-12-01T19:50:39.083Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "kwkn36gwwdyialjd56lheuyvbxue9j0q",
+    "fields": {
+        "session_data": ".eJxVjEkOwjAQBP_iM7LGS5zlyJ03WDNeiAHZyE4kEOLvECkHuHZV14tZXJfZri1UmzybmGaH343QXUPegL9gPhfuSl5qIr4pfKeNn4oPt-Pu_gVmbPP37ZQk6smJEMcgpdY4gEY9SE1KGDOS6L02EmKHqCCCJNeZOCpBBhz6uEVbaC2VbMPjnuqTTcoAvD9Hgj-6:1vKFVZ:BuDpEEjptNs0XdYzXWaBmek8s8gyeR_PdQPw1rk70wc",
+        "expire_date": "2025-11-15T13:36:01.812Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "m890gt1pd2qlpjc4xtlpzm5nt5wqdjzy",
+    "fields": {
+        "session_data": "eyJwcmVfbWZhX3VzZXJfaWQiOjZ9:1vVRwF:J5tF2xk86V8jBAvgY2yfKs33Af4v7FRsD6zE7X3V4rI",
+        "expire_date": "2025-12-30T10:05:51.445Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "mk87m5t0h16142dt8mlbalarrfzhst0t",
+    "fields": {
+        "session_data": ".eJxVkLtuwzAMRf-Fs2FYb9tjM_cLisKgKLpWm0iBJaMtgvx74zRLOBG8h2e4F0CivKU64VYXTjUS1pjTdOK65FBgfLvA_w4jnLGU77wGaAArjMJZM9xGqNZoa2wvG9gKrwlPfKMPfIwo4PrewN0-7dkUd1EPTzeP9MVpD8Inpo_cUk51jb7dkfaRlvY1Bz6-PNgnwYJluX2L2ZOV1jsjlbZM3qrZKC30oAYvdWfmobN9YBu0c0JK5bCTvXEDEXma79LCpewF8M85rr8wdtc_UAxftQ:1vVxFZ:BWxFNVIefxl1jYtXnqsGKfTzP2HiFMI4UaQ1T2Z0ANg",
+        "expire_date": "2025-12-31T19:31:53.580Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "mt2limvn9blk2z5p9ncx4us4gzc996r3",
+    "fields": {
+        "session_data": ".eJxVjctuwjAQRf9l1pHlt5Msu-83RPbYIYbKobYjgVD-HYxQC7OYxZwz995gsltdpq2EPEUPI_TQvd-cxVNIDfijTYeV4Jpqjo40hbxoId-rDz9fL_cjYLFleXyz2aHm2hnFhdQBnRazEpLJQQyOS6rmgereB-2lMYxzYSzlvTIDIjqcn6EllBLXNIXLOeYrjLQDtLnCeAPG2v7dbKqxPhDr4JwjhtYsaBtCKewdMP4pin-xV3_evt8B4INXsw:1vVWG7:gjba0zpW8ANhOJHMI3ZE9S0-16Mc7IGGSca50Cv0-3k",
+        "expire_date": "2025-12-30T14:42:39.648Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "mvy2ha5pcgt1poklh5o2nzz06cjatcim",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQRe_C2pBCp1C6dO8ZyDBDLWrAlDbRGO-uTbrQ7X_vv5fwuC6TX2ucfWIxCCsOv1tAusa8Ab5gPhdJJS9zCnJT5E6rPBWOt-Pu_gUmrNP3rW2vMCprTY9AqAxoAOjalpQZiaHTBD2TGxvnmA0EZxqnjYpoKUBHW7TGWlPJPj7uaX6KoXl_AGArPo4:1vLOMj:UJaJuR1_ZN_DcV9XNzhKLOJufbBlGZTxbHucaYHUluA",
+        "expire_date": "2025-12-02T16:15:37.161Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "nfrjnrbb7n4q7sh0ynojgtgnjgqm5mcr",
+    "fields": {
+        "session_data": ".eJxVT8tuhSAQ_ZdZG4OAIO7a32gagzBcSbnSCN6N8d-L1qZxM5mc15zZIEXjddDGxHXOQ8o6Y4J-2yv4w164eOfRDvjUPkA_ryH8s3rNE87ZG519nIcn5inakvCxwe8O_f0GFG-GvpGiVR0njNSiTEVEBd9LfHmLS7E8YnwELNrVHwkN4UJJ2RVL28mWEMaVhP2zgrPAsCZchlNJG7iBozZfOB-MDuGA66tHfWouOtVvtz_eL9ctatJpOro43siRU7RScq7MiB0aHBklsuHUKSsE45oaIShxzDnGtBNtO9qC8dIe9h9RaHvr:1vVt7T:MVdstFqrlakzjw7khDfb3_M6Hs3Xc8XrR7vLoINRgVg",
+        "expire_date": "2025-12-31T15:07:15.039Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "pxbj9525td4axjd1fd8r2v0b73nca96u",
+    "fields": {
+        "session_data": ".eJxVjEEOgjAQRe_StWkK7UBh6d4zNNPOIFXTEgqJxnh3IWGh2__ef2_hcF1GtxaeXSTRCytOv5vHcOe0A7phumYZclrm6OWuyIMWecnEj_Ph_gVGLOP2Vlo3BgAtdsG0FTUtmQoGYgZVIWivGgVYq5p9vUELPFCwpDUHb6lr92jhUmJOjp9TnF-iV58vdSI_Eg:1vLGdj:9SHfXbG06qRh4TLThatB9OaFWoPFejCcsy_e01QcH9A",
+        "expire_date": "2025-12-02T08:00:39.268Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "t2zjg7snn9sut2e74mez1gejswhnqwd8",
+    "fields": {
+        "session_data": ".eJxVjMEOwiAQBf-FsyFAC4UevfsNhF0WixowpU00xn_XJj3o9c28eTEf1mXya6PZ58hGZtjhd4OAVyobiJdQzpVjLcucgW8K32njpxrpdtzdv8AU2vR94yDIoUzWCQUgpEYIAQJ0UgZApdVgRTKqTyr1DgZLqIzU5Gy0Go3BLdqotVyLp8c9z082dkaI9wdkl0AD:1vTK6U:LTWTi7w7kdlOKULUPdlUCOnYDGOBcD4NSBy8buqqBfI",
+        "expire_date": "2025-12-10T14:19:38.483Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "th0pkcvxwjlign9yw3gxp5zhm4thyjqh",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQRe_C2hCK7QBduvcMZMowFjXUlDbRGO9uSbrQ7X_vv7fwuC6jX0ucfSLRCxCH323AcIu5ArpivkwyTHmZ0yCrInda5HmieD_t7l9gxDJub6YWAg4mcgAiaDoibQKzs4YdgwZrGTtQDaqGq8PWbcrRaNQtK1ejJZaSpuzj85Hml-iPoNTnC520QL0:1vKW54:rUEavTMFuNHInc5DBJ_hdKT3NB2LEH4Bo3rUgt4SUO8",
+        "expire_date": "2025-11-16T07:17:46.817Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "up74wwf81ylg2fepjr5js7jxw15y8wiy",
+    "fields": {
+        "session_data": ".eJxVjEkOwjAQBP_iM7K8TJzlyJ03WDNeiAHZyE4kEOLvECkHuHZV14tZXJfZri1UmzybGLDD70boriFvwF8wnwt3JS81Ed8UvtPGT8WH23F3_wIztvn7dloR9eRkiGNQCgAHAQiDAtLSmJFk78EoETtELaJQ5DoTRy3JCIc-btEWWksl2_C4p_pkk3h_AImwPyE:1vKNBd:zXlP2C1KLWgG1HuS5ffB0f7GgBgwfrkvznp-6xjN3F4",
+        "expire_date": "2025-11-29T20:47:57.806Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "w8q0hstcm6mo6se9xor7h1bp8ixywtyt",
+    "fields": {
+        "session_data": ".eJxVjEEOgjAQRe_StWkK7UBh6d4zNNPOIFXTEgqJxnh3IWGh2__ef2_hcF1GtxaeXSTRCytOv5vHcOe0A7phumYZclrm6OWuyIMWecnEj_Ph_gVGLOP2Vlo3BgAtdsG0FTUtmQoGYgZVIWivGgVYq5p9vUELPFCwpDUHb6lr92jhUmJOjp9TnF-iV58vdSI_Eg:1vLipT:GhhcbUUUkzR7WbuT66uR2OoVuoJ2a1_ejaAudwQ5e6I",
+        "expire_date": "2025-12-03T14:06:39.603Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "x7ai23tths78p8evepa2jnkbd18g391y",
+    "fields": {
+        "session_data": ".eJxVjMsOwiAUBf-FtSGUZ-nSvd9AuBewqIGmtInG-O9a04Vuz8yZJ3F-XUa3tji7HMhAenL43cDjNZYNhIsv50qxlmXOQDeF7rTRUw3xdtzdv8Do2_h5dwlQcw1GcSF1RNAiKSE7aYUFLplKluk-RB2kMR3nwnjGe2UsIgKmb7TF1nItLt6nPD_IwF5vYyU-jQ:1vVQzO:RBJjAXRp1OmOo0Egk6yCxPIC2bs2YLNWHrH_OIXxqoA",
+        "expire_date": "2025-12-30T09:05:02.357Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "xj0m767ljbx3ue3md96f4fzb2r6xa3av",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQRe_C2hCK7QBduvcMZMowFjXUlDbRGO9uSbrQ7X_vv7fwuC6jX0ucfSLRCxCH323AcIu5ArpivkwyTHmZ0yCrInda5HmieD_t7l9gxDJub6YWAg4mcgAiaDoibQKzs4YdgwZrGTtQDaqGq8PWbcrRaNQtK1ejJZaSpuzj85Hml-iPoNTnC520QL0:1vMkrF:rNknWsPmgojDvsR0zFBqA5UO8ZtTr6kBQdwKFslrv6o",
+        "expire_date": "2025-11-22T11:28:45.147Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "y6td3nj1pr8hr094x1vkywhdr0kyo8th",
+    "fields": {
+        "session_data": ".eJxVkMFuwyAMQP_F5wjVEAjJcfd9wTRFBpyFbYEqEG1T1X9f2XrpzfJ7fgdfgLzPR6ozHXXlVKOnGnOaN65rDgWmlwv8zzDBmUr5ynuADqjChIMxqKwyo5CoZY9DB0fhPdHGNzvQlo8drq8d_NXnxubYQgYedo78B6cGwjultyx8TnWPTjRF3GkRzznw59PdfQisVNbbtezl6EiT0tKFQIMZLS_a9ronjSgRe3Sogx_Qu4WsUkYup2ANkwvIyrZo4VLaA_j7HPcfmE7XX7KGYIo:1vWXGn:moIi7JK9wW0PyDK_vd8m1WsmLcevt6m0vbNJaGJhr1s",
+        "expire_date": "2026-01-02T09:59:33.439Z"
+    }
+},
+{
+    "model": "sites.site",
+    "fields": {
+        "domain": "127.0.0.1:8000",
+        "name": "SokoHub"
+    }
+},
+{
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+        "parent": null,
+        "name": "Electronics",
+        "slug": "electronics",
+        "description": "Explore the latest technology including smartphones, laptops, and home appliances at the best prices in Rwanda."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+        "parent": null,
+        "name": "Fashion",
+        "slug": "fashion",
+        "description": "Stay stylish with our wide collection of trendy clothing, shoes, and accessories for men and women."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+        "parent": null,
+        "name": "Home & Living",
+        "slug": "home-living",
+        "description": "Everything you need to furnish and decorate your home comfortably and affordably."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 4,
+    "fields": {
+        "parent": null,
+        "name": "Food & Groceries",
+        "slug": "food-groceries",
+        "description": "Fresh local produce, pantry staples, and beverages delivered straight to your door."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 5,
+    "fields": {
+        "parent": 1,
+        "name": "SmartPhones",
+        "slug": "smartphones",
+        "description": "Shop the newest Android and iPhones from top brands like Samsung, Tecno, and Apple."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 6,
+    "fields": {
+        "parent": 1,
+        "name": "Laptops",
+        "slug": "laptops",
+        "description": "Find powerful laptops for work, school, and gaming. Great deals on HP, Dell, and Lenovo"
+    }
+},
+{
+    "model": "products.category",
+    "pk": 7,
+    "fields": {
+        "parent": 1,
+        "name": "Accessories",
+        "slug": "accessories",
+        "description": "Essential tech accessories including chargers, headphones, phone cases, and power banks."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 8,
+    "fields": {
+        "parent": 1,
+        "name": "Home Appliances",
+        "slug": "home-appliances",
+        "description": "Upgrade your home with modern fridges, washing machines, blenders, and TVs"
+    }
+},
+{
+    "model": "products.category",
+    "pk": 9,
+    "fields": {
+        "parent": 2,
+        "name": "Men's Clothing",
+        "slug": "mens-clothing",
+        "description": "Casual and formal wear for men. Shirts, trousers, suits, and activewear."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 10,
+    "fields": {
+        "parent": 2,
+        "name": "Women's Clothing",
+        "slug": "womens-clothing",
+        "description": "Beautiful dresses, tops, skirts, and traditional wear for every occasion."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 11,
+    "fields": {
+        "parent": 2,
+        "name": "Shoes",
+        "slug": "shoes",
+        "description": "Comfortable and stylish footwear including sneakers, boots, heels, and sandals.\""
+    }
+},
+{
+    "model": "products.category",
+    "pk": 12,
+    "fields": {
+        "parent": 2,
+        "name": "Bags &Watches",
+        "slug": "bags-watches",
+        "description": "Complete your look with luxury watches, handbags, backpacks, and wallets."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 13,
+    "fields": {
+        "parent": 3,
+        "name": "Furniture",
+        "slug": "furniture",
+        "description": "Quality sofas, beds, tables, and office chairs to transform your living space."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 14,
+    "fields": {
+        "parent": 3,
+        "name": "Kitchenware",
+        "slug": "kitchenware",
+        "description": "Cookware, utensils, and dining sets to make every meal special."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 15,
+    "fields": {
+        "parent": 3,
+        "name": "Decors",
+        "slug": "decors",
+        "description": "Wall art, curtains, rugs, and lighting to add a personal touch to your home."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 16,
+    "fields": {
+        "parent": 4,
+        "name": "Beverages",
+        "slug": "beverages",
+        "description": "Refreshing juices, sodas, water, tea, and coffee."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 17,
+    "fields": {
+        "parent": 4,
+        "name": "Grains & Rice",
+        "slug": "grains-rice",
+        "description": "High-quality rice, flour, beans, and pasta for your daily meals."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 18,
+    "fields": {
+        "parent": 4,
+        "name": "Snacks",
+        "slug": "snacks",
+        "description": "Tasty biscuits, crisps, chocolates, and quick bites for any time of day."
+    }
+},
+{
+    "model": "products.category",
+    "pk": 19,
+    "fields": {
+        "parent": 4,
+        "name": "Fruits",
+        "slug": "fruits",
+        "description": "Have better life with our delicious fruits"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 1,
+    "fields": {
+        "product": 12,
+        "image": "product_gallery/lenovo3.jpg"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 2,
+    "fields": {
+        "product": 12,
+        "image": "product_gallery/lenovo1.jpg"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 3,
+    "fields": {
+        "product": 13,
+        "image": "product_gallery/len3.jpg"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 4,
+    "fields": {
+        "product": 13,
+        "image": "product_gallery/lap1.jpg"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 5,
+    "fields": {
+        "product": 14,
+        "image": "product_gallery/dell1.jpg"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 6,
+    "fields": {
+        "product": 14,
+        "image": "product_gallery/dell.jpg"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 7,
+    "fields": {
+        "product": 15,
+        "image": "product_gallery/len3_52aqpLU.jpg"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 8,
+    "fields": {
+        "product": 15,
+        "image": "product_gallery/dell1_N7jO0uJ.jpg"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 9,
+    "fields": {
+        "product": 16,
+        "image": "product_gallery/bev2.jpg"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 10,
+    "fields": {
+        "product": 16,
+        "image": "product_gallery/bev1.jpg"
+    }
+},
+{
+    "model": "products.productgallery",
+    "pk": 11,
+    "fields": {
+        "product": 16,
+        "image": "product_gallery/beverages.jpg"
+    }
+},
+{
+    "model": "accounts.customuser",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$EmJc6vwEaB3X03sChK5jSV$T5gs0KmRAtsC1apOHGCFASJRmfOmCL/XvMyCbeA5rzU=",
+        "last_login": "2025-12-19T14:33:25.464Z",
+        "is_superuser": false,
+        "username": "damour",
+        "first_name": "",
+        "last_name": "",
+        "email": "nkurunzizajeandamour20@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-11-16T06:11:28Z",
+        "user_type": "vendor",
+        "phone": 791261144,
+        "location": "BureriansBoy",
+        "mfa_enabled": true,
+        "mfa_method": "email",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.customuser",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$WIy5xbAZfmCReYI4GbHByg$ipwEKq8i1mglIUodVFx+NLXzDIvxxekunb45SLPMg4U=",
+        "last_login": "2025-12-19T15:51:41.383Z",
+        "is_superuser": true,
+        "username": "superdamz",
+        "first_name": "",
+        "last_name": "",
+        "email": "mrdamouroo1@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-12-13T11:01:55.002Z",
+        "user_type": "customer",
+        "phone": null,
+        "location": null,
+        "mfa_enabled": false,
+        "mfa_method": "email",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.emailotp",
+    "pk": 1,
+    "fields": {
+        "user": [
+            "damour"
+        ],
+        "otp_code": "178530",
+        "created_at": "2025-12-19T14:33:25.475Z",
+        "expires_at": "2025-12-19T14:38:25.475Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "Shoes",
+        "description": "This is quality shoes",
+        "price": "40000.00",
+        "stock": 7,
+        "image": "product_images/shoes_2WOtbJG.jpeg",
+        "status": "active",
+        "created_at": "2025-11-16T06:57:42.901Z",
+        "category": null,
+        "unit": null,
+        "is_deleted": true
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "Laptop",
+        "description": "quality laptop",
+        "price": "1200.00",
+        "stock": 4,
+        "image": "product_images/laptops.jpeg",
+        "status": "active",
+        "created_at": "2025-11-16T07:29:39.518Z",
+        "category": 6,
+        "unit": null,
+        "is_deleted": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "Pants",
+        "description": "This is best pant outfit",
+        "price": "1500.00",
+        "stock": 0,
+        "image": "product_images/Pants.jpg",
+        "status": "active",
+        "created_at": "2025-11-17T13:37:24.811Z",
+        "category": null,
+        "unit": null,
+        "is_deleted": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "Smart watch",
+        "description": "A modern fit watch",
+        "price": "10000.00",
+        "stock": 5,
+        "image": "product_images/watch1.jpeg",
+        "status": "active",
+        "created_at": "2025-11-18T07:51:32.019Z",
+        "category": null,
+        "unit": null,
+        "is_deleted": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "SmartPhone",
+        "description": "An original SmartPhine with all latest features",
+        "price": "800000.00",
+        "stock": 14,
+        "image": "product_images/phone2.jpeg",
+        "status": "active",
+        "created_at": "2025-11-19T14:05:37.182Z",
+        "category": null,
+        "unit": null,
+        "is_deleted": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 11,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "Laptop Lenovo i7",
+        "description": "Quality laptops",
+        "price": "1300000.00",
+        "stock": 86,
+        "image": "product_images/lenovo1.jpg",
+        "status": "active",
+        "created_at": "2025-12-13T13:10:39.980Z",
+        "category": 6,
+        "unit": "1",
+        "is_deleted": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 12,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "Laptop Lenovo i5",
+        "description": "Quality laptop",
+        "price": "850000.00",
+        "stock": 85,
+        "image": "product_images/lenovo2.jpg",
+        "status": "active",
+        "created_at": "2025-12-13T19:09:47.372Z",
+        "category": 6,
+        "unit": "1",
+        "is_deleted": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 13,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "Lenovo i8",
+        "description": "Next-level processing power for demanding applications.\r\nIdeal for power users who need speed and efficiency.",
+        "price": "1700000.00",
+        "stock": 99,
+        "image": "product_images/len2.jpg",
+        "status": "active",
+        "created_at": "2025-12-16T10:56:10.957Z",
+        "category": 6,
+        "unit": "1",
+        "is_deleted": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 14,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "MacBook",
+        "description": "Premium design with powerful performance and long battery life.\r\nIdeal for creatives, developers, and professionals.",
+        "price": "2000000.00",
+        "stock": 76,
+        "image": "product_images/mac1.jpg",
+        "status": "active",
+        "created_at": "2025-12-16T10:57:38.522Z",
+        "category": 6,
+        "unit": "1",
+        "is_deleted": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 15,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "Dell",
+        "description": "Strong build quality with reliable performance for daily use.\r\nPerfect for business, school, and home productivity.",
+        "price": "700000.00",
+        "stock": 70,
+        "image": "product_images/dell.jpg",
+        "status": "active",
+        "created_at": "2025-12-16T10:58:39.467Z",
+        "category": 6,
+        "unit": "1",
+        "is_deleted": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 16,
+    "fields": {
+        "vendor": [
+            "damour"
+        ],
+        "name": "Drinks",
+        "description": "Refreshing and enjoyable with a great taste.\r\nPerfect for everyday moments and special occasions.\r\nA satisfying drink choice for all ages.",
+        "price": "30000.00",
+        "stock": 150,
+        "image": "product_images/bev3.jpg",
+        "status": "active",
+        "created_at": "2025-12-19T14:08:49.102Z",
+        "category": 16,
+        "unit": "crate",
+        "is_deleted": false
+    }
+},
+{
+    "model": "otp_totp.totpdevice",
+    "pk": 4,
+    "fields": {
+        "user": [
+            "damour"
+        ],
+        "name": "default",
+        "confirmed": true,
+        "throttling_failure_timestamp": "2025-12-19T12:47:28.952Z",
+        "throttling_failure_count": 1,
+        "created_at": "2025-12-15T06:57:01.236Z",
+        "last_used_at": "2025-12-17T11:49:19.470Z",
+        "key": "1007b163c74ab7b69fd6ae85ada696643e4c0055",
+        "step": 30,
+        "t0": 0,
+        "digits": 6,
+        "tolerance": 1,
+        "drift": 0,
+        "last_t": 58865738
+    }
+}
+]
