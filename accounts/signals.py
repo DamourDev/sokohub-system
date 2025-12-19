@@ -15,7 +15,7 @@ def send_welcome_email(request, user, **kwargs):
         subject = 'Welcome to SokoHub!'
         
         # Your exact message logic:
-        message = f"Hi {user.username},\n\nCongratulations! You are now a registered member of SokoHub.\n\nYou can now browse products and place orders.\n\nThank you for joining us!"
+        message = f"Hi {user.username},\n\nCongratulations! You are now a registered member of SokoHub.\n\nYou can now browse sell, buy products on your convenience.\n\nThank you for joining us!"
         
         from_email = settings.EMAIL_HOST_USER
         recipient_list = [user.email]

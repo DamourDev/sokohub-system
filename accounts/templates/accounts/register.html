@@ -11,21 +11,26 @@
                 Fill in your details to join <strong>SokoHub</strong>
             </p>
 
-            <form method="POST" action="{% url 'register' %}" autocomplete="off">
+            <form method="POST" action="" autocomplete="off">
                 {% csrf_token %}
                 
+                {% if form.errors %}
+                <div class="alert alert-danger border-0 shadow-sm rounded-3 py-2 mb-3">
+                  <ul class="list-unstyled mb-0 small">
+                    {% for field in form %}{% for error in field.errors %}<li><i class="bi bi-exclamation-circle me-1"></i><strong>{{ field.label }}:</strong> {{ error }}</li>{% endfor %}{% endfor %}
+                    {% for error in form.non_field_errors %}<li><i class="bi bi-exclamation-triangle me-1"></i>{{ error }}</li>{% endfor %}
+                  </ul>
+                </div>
+                {% endif %}
 
                 <!-- Prevent browser autofill -->
                 <input type="text" style="display:none">
                 <input type="password" style="display:none">
 
-                {% if form.non_field_errors %}
-                <div class="alert alert-danger small">
-                    {{ form.non_field_errors }}
-                </div>
-                {% endif %}
-
                 <label class="form-label small fw-semibold text-muted">Username</label>
+                {% if form.username.errors %}
+                <div class="text-danger small">{{ form.username.errors }}</div>
+                {% endif %}
                 <div class="input-group mb-3">
                     <span class="input-group-text bg-light">
                         <i class="bi bi-person"></i>
@@ -34,11 +39,15 @@
                            name="{{ form.username.name }}"
                            id="{{ form.username.id_for_label }}"
                            class="form-control"
-                           placeholder="Username"
+                           placeholder="e.g. johndoe"
+                           value="{{ form.username.value }}"
                            autocomplete="username">
                 </div>
 
                 <label class="form-label small fw-semibold text-muted">Email</label>
+                {% if form.email.errors %}
+                <div class="text-danger small">{{ form.email.errors }}</div>
+                {% endif %}
                 <div class="input-group mb-3">
                     <span class="input-group-text bg-light">
                         <i class="bi bi-envelope"></i>
@@ -48,24 +57,31 @@
                            id="{{ form.email.id_for_label }}"
                            class="form-control"
                            placeholder="Email address"
+                           value="{{ form.email.value }}"
                            autocomplete="email">
                 </div>
 
                 <label class="form-label small fw-semibold text-muted">User Type</label>
+                {% if form.user_type.errors %}
+                <div class="text-danger small">{{ form.user_type.errors }}</div>
+                {% endif %}
                 <div class="input-group mb-3">
                     <span class="input-group-text bg-light">
                         <i class="bi bi-briefcase"></i>
                     </span>
-                    <select name="{{ form.user_type. }}"
+                    <select name="{{ form.user_type.name }}"
                             id="{{ form.user_type.id_for_label }}"
                             class="form-select">
                         {% for value, label in form.user_type.field.choices %}
-                            <option value="{{ value }}">{{ label }}</option>
+                            <option value="{{ value }}" {% if form.user_type.value == value %}selected{% endif %}>{{ label }}</option>
                         {% endfor %}
                     </select>
                 </div>
 
                 <label class="form-label small fw-semibold text-muted">Password</label>
+                {% if form.password1.errors %}
+                <div class="text-danger small">{{ form.password1.errors }}</div>
+                {% endif %}
                 <div class="input-group mb-3">
                     <span class="input-group-text bg-light">
                         <i class="bi bi-lock"></i>
@@ -82,6 +98,9 @@
                 </div>
 
                 <label class="form-label small fw-semibold text-muted">Confirm Password</label>
+                {% if form.password2.errors %}
+                <div class="text-danger small">{{ form.password2.errors }}</div>
+                {% endif %}
                 <div class="input-group mb-4">
                     <span class="input-group-text bg-light">
                         <i class="bi bi-shield-lock"></i>
@@ -100,6 +119,9 @@
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <label class="form-label small fw-semibold text-muted">Phone</label>
+                        {% if form.phone.errors %}
+                        <div class="text-danger small">{{ form.phone.errors }}</div>
+                        {% endif %}
                         <div class="input-group">
                             <span class="input-group-text bg-light">
                                 <i class="bi bi-telephone"></i>
@@ -108,13 +130,17 @@
                                    name="{{ form.phone.name }}"
                                    id="{{ form.phone.id_for_label }}"
                                    class="form-control"
-                                   placeholder="Phone"
+                                   placeholder="e.g. +250788..."
+                                   value="{{ form.phone.value }}"
                                    autocomplete="off">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label small fw-semibold text-muted">Location</label>
+                        {% if form.location.errors %}
+                        <div class="text-danger small">{{ form.location.errors }}</div>
+                        {% endif %}
                         <div class="input-group">
                             <span class="input-group-text bg-light">
                                 <i class="bi bi-geo-alt"></i>
@@ -123,7 +149,8 @@
                                    name="{{ form.location.name }}"
                                    id="{{ form.location.id_for_label }}"
                                    class="form-control"
-                                   placeholder="Location"
+                                   placeholder="Your City/District"
+                                   value="{{ form.location.value }}"
                                    autocomplete="off">
                         </div>
                     </div>

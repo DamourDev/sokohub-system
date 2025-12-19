@@ -31,8 +31,14 @@ class CustomSignupForm(SignupForm):
     )
 
     def __init__(self, *args, **kwargs):
-        
         super(CustomSignupForm, self).__init__(*args, **kwargs)
+        
+        self.fields['username'] = forms.CharField(
+            max_length=150,
+            required=True,
+            widget=forms.TextInput(attrs={'placeholder': 'Username'})
+        )
+        
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             
@@ -53,7 +59,7 @@ class CustomSignupForm(SignupForm):
         user.save()
 
         subject = "Welcome to SokoHub!"
-        message = render_to_string('account/signup_success_email.html', {'user': user})
+        message = render_to_string('accounts/signup_success_email.html', {'user': user})
         send_mail(
             subject,
             message,  # Plain text fallback

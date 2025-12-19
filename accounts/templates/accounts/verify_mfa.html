@@ -2,10 +2,10 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="card shadow col-md-4 mx-auto">
+    <div class="card border-0 shadow-sm bg-white col-md-4 mx-auto">
         <div class="card-body p-4">
             
-            <h3 class="text-center">Security Check</h3>
+            <h3 class="text-center text-dark fw-bold">Security Check</h3>
 
             <p class="text-center text-muted">
                 {% if mfa_method == 'email' %}
@@ -19,10 +19,10 @@
                 {% csrf_token %}
                 
                 <div class="mb-3">
-                    <input type="text" name="otp_code" class="form-control text-center" placeholder="000000" required>
+                    <input type="text" name="otp_code" class="form-control text-center rounded-pill shadow-sm border-0" placeholder="000000" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100">Verify</button>
+                <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm w-100">Verify</button>
             </form>
 
         </div>

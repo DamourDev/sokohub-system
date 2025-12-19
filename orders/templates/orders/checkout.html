@@ -11,7 +11,7 @@
         </ol>
     </nav>
 
-    <h2 class="fw-bold mb-4">Secure Checkout</h2>
+    <h2 class="fw-bold text-dark mb-4">Secure Checkout</h2>
 
     <form method="POST" action="">
         {% csrf_token %}
@@ -19,9 +19,9 @@
         <div class="row g-5"> <div class="col-lg-6">
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-white py-3">
-                        <h5 class="mb-0 fw-bold"><i class="bi bi-truck me-2"></i>Shipping Details</h5>
+                        <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-truck me-2"></i>Shipping Details</h5>
                     </div>
-                    <div class="card-body p-4">
+                    <div class="card-body bg-white p-4">
                         
                         <div class="mb-4">
                             <label for="{{ form.delivery_address.id_for_label }}" class="form-label fw-bold">Delivery Address</label>
@@ -55,11 +55,11 @@
             <div class="col-lg-6">
                 <div class="card border-0 shadow-sm position-sticky" style="top: 20px;">
                     <div class="card-header bg-primary text-white py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-bold"><i class="bi bi-cart3 me-2"></i>Order Summary</h5>
+                        <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-cart3 me-2"></i>Order Summary</h5>
                         <span class="badge bg-white text-primary rounded-pill" id="cart-count-badge">{{ cart|length }} Items</span>
                     </div>
                     
-                    <div class="card-body p-0">
+                    <div class="card-body bg-white p-0">
                         <div class="list-group list-group-flush" id="checkout-cart-container" style="max-height: 500px; overflow-y: auto;">
                             
                             {% for item in cart %}
@@ -86,7 +86,7 @@
                                         </div>
                                         
                                         <div class="d-flex justify-content-between align-items-end mt-2">
-                                            <span class="text-primary fw-bold">{{ item.product.price }} Frw</span>
+                                            <span class="text-success fw-bold">{{ item.product.price|floatformat:"0" }} Frw</span>
                                             
                                             <div class="d-flex align-items-center bg-light rounded border px-1">
                                                 <button type="button" class="btn btn-sm px-2 text-secondary cart-decrement" data-index="{{ item.product.id }}">
@@ -107,9 +107,9 @@
                     </div>
 
                     <div class="card-footer bg-white p-4">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Subtotal</span>
-                            <span class="fw-bold fs-5" id="checkout-subtotal">{{ cart.get_total_price }} Frw</span>
+                        <div class="d-flex flex-column align-items-center gap-2 mb-4">
+                            <span class="small text-muted">Total Amount</span>
+                            <span class="text-danger fw-bold fs-4" id="checkout-subtotal">{{ cart.get_total_price|floatformat:"0" }} Frw</span>
                         </div>
                         <div class="d-flex justify-content-between mb-4">
                             <span class="text-muted">Shipping</span>
@@ -117,7 +117,7 @@
                         </div>
                         
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-success btn-lg shadow-sm fw-bold py-3" id="place-order-btn">
+                            <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm btn-lg fw-bold py-3" id="place-order-btn">
                                 CONFIRM ORDER <i class="bi bi-check-circle-fill ms-2"></i>
                             </button>
                         </div>

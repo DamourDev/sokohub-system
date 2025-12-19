@@ -5,20 +5,20 @@
 <div class="container py-5">
     
     <div class="d-flex justify-content-between align-items-center mb-4 no-print">
-        <a href="{% url 'products_list' %}" class="btn btn-outline-secondary">
+        <a href="{% url 'products_list' %}" class="btn btn-outline-dark rounded-pill px-4 shadow-sm">
             <i class="bi bi-arrow-left"></i> Back to Shopping
         </a>
-        <button onclick="window.print()" class="btn btn-primary">
+        <button onclick="window.print()" class="btn btn-primary rounded-pill px-4 shadow-sm">
             <i class="bi bi-printer"></i> Print Invoice
         </button>
     </div>
 
-    <div class="card border-0 shadow-lg" id="invoice-card">
+    <div class="card border-0 shadow-sm bg-white" id="invoice-card">
         <div class="card-body p-5">
             
             <div class="d-flex justify-content-between align-items-start border-bottom pb-4 mb-4">
                 <div>
-                    <h2 class="fw-bold text-primary mb-1">INVOICE</h2>
+                    <h2 class="text-dark fw-bold text-primary mb-1">INVOICE</h2>
                     <p class="text-muted mb-0">Order #{{ order.id }}</p>
                 </div>
                 <div class="text-end">
@@ -67,7 +67,7 @@
                                 {{ item.product.vendor.username }}
                             </td>
                             <td class="py-3 text-center">{{ item.quantity}}</td>
-                            <td class="py-3 text-end">{{ item.price }} Frw</td>
+                            <td class="py-3 text-end">{{ item.price|floatformat:"0" }} Frw</td>
                             <td class="py-3 text-end fw-bold">
                                 {% widthratio item.price 1 item.quantity %} Frw
                             </td>
@@ -81,7 +81,7 @@
                 <div class="col-md-5 col-lg-4">
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Subtotal:</span>
-                        <span class="fw-bold">{{ order.total }} Frw</span>
+                        <span class="fw-bold">{{ order.total|floatformat:"0" }} Frw</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Shipping:</span>
@@ -90,7 +90,7 @@
                     <hr>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="h5 mb-0 fw-bold">Grand Total:</span>
-                        <span class="h4 mb-0 fw-bold text-primary">{{ order.total }} Frw</span>
+                        <span class="h4 mb-0 fw-bold text-success">{{ order.total|floatformat:"0" }} Frw</span>
                     </div>
                 </div>
             </div>

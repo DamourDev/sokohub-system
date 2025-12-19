@@ -39,12 +39,19 @@ class MyAccountAdapter(DefaultAccountAdapter):
             return resolve_url('vendor_dashboard') 
         else:
             return resolve_url('products_list')
+        
+
+    def get_signup_redirect_url(self, request):
+        user = request.user
+        if user.user_type == 'vendor':
+            return resolve_url('vendor_dashboard')
+        return resolve_url('products_list')
 
 
 class MySocialAccountAdapter(DefaultSocialAccountAdapter):
     def save_user(self, request, sociallogin, form=None):
         user = super().save_user(request, sociallogin, form)
-        selected_type = request.POST.get('selected_user_type')
+        selected_type = request.POST.get('user_type')
         if selected_type in ['vendor', 'customer']:
             user.user_type = selected_type
             user.save()
@@ -52,7 +59,7 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
 
     # This handles the redirect after a NEW signup
     def get_signup_redirect_url(self, request):
-        selected_type = request.POST.get('selected_user_type')
+        selected_type = request.POST.get('user_type')
         if selected_type == 'vendor':
             return resolve_url('vendor_dashboard')
         return resolve_url('products_list')
