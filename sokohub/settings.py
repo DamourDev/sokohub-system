@@ -14,17 +14,17 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
-import environ  # This is the django-environ package
+import environ  
 
-# 1. Initialize environment variables
+#  Initialize environment variables
 env = environ.Env(
     DEBUG=(bool, False)  # Sets a default and type-casts
 )
 
-# 2. Define BASE_DIR
+# Define BASE_DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 3. Read the .env file (Absolute Path)
+# Read the .env file (Absolute Path)
 # This ensures it finds the file in your root folder correctly
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -46,8 +46,6 @@ DATABASES = {
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY', default='local-secret-key') 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', default=True)
 
 ALLOWED_HOSTS = ["*"]
 
