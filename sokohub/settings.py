@@ -226,18 +226,17 @@ WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 WHITENOISE_ALLOW_MISSING_FILES = True
 
 
-# Change the staticfiles backend to your new custom class
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
+
+
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-
+        "BACKEND": "whitenoise.storage.StaticFilesStorage",
     },
 }
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 
