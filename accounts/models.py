@@ -18,7 +18,7 @@ class CustomUser(AbstractUser):
         default='customer',
         verbose_name='User Type' 
     )
-    phone = models.PositiveIntegerField(null=True, blank=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
 
     mfa_enabled = models.BooleanField(default=False)

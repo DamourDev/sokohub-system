@@ -48,11 +48,11 @@ class CustomSignupForm(SignupForm):
             raise ValidationError("This username is already taken.")
         return username
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if CustomUser.objects.filter(email__iexact=email).exists():
-            raise ValidationError("This email is already registered.")
-        return email
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if phone and not phone.isdigit():
+            raise ValidationError("Phone number must contain only digits.")
+        return phone
 
     def save(self, request):
         user = super().save(request)

@@ -242,6 +242,7 @@ def enable_email_mfa(request):
             fail_silently=True
         )
     except Exception as e:
+        print(f"Email error: {e}")
         messages.error(request, "Failed to send email. Please try again.")
         return redirect('mfa_settings')
 

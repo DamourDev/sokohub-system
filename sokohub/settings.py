@@ -139,8 +139,8 @@ SOCIALACCOUNT_PROVIDERS = {
     'google': {
         # For version > 0.61.0, use this structure. 
         'APP': {
-            'client_id': '57696819800-thv6q1kd5a9rgfgtbrb362dve96codhf.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': env('GOOGLE_CLIENT_ID', default='57696819800-thv6q1kd5a9rgfgtbrb362dve96codhf.apps.googleusercontent.com'),
+            'secret': env('GOOGLE_CLIENT_SECRET', default='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'),
             'key': ''
         },
         'SCOPE': [
@@ -267,6 +267,10 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # --- Email Configuration (SendGrid) ---
+# EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+# EMAIL_BACKEND = "sendgrid_django.backend.SendgridBackend"
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = env("SENDGRID_API_KEY")
-DEFAULT_FROM_EMAIL = "Sokohub <sokohubsystem@gmail.com>"
+DEFAULT_FROM_EMAIL = "SokoHub <sokohubsystem@gmail.com>"
+EMAIL_HOST_USER = "sokohubsystem@gmail.com"  # Set to your verified SendGrid email
+ 
