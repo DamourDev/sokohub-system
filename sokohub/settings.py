@@ -79,7 +79,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
 ]
 
-SITE_ID = 1
+SITE_ID = 3
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, etc.
@@ -272,5 +272,5 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = env("SENDGRID_API_KEY")
 DEFAULT_FROM_EMAIL = "SokoHub <sokohubsystem@gmail.com>"
-EMAIL_HOST_USER = "sokohubsystem@gmail.com"  # Set to your verified SendGrid email
+# EMAIL_HOST_USER = "sokohubsystem@gmail.com"  # Set to your verified SendGrid email
  
