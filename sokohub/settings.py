@@ -272,5 +272,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = env("SENDGRID_API_KEY")
 DEFAULT_FROM_EMAIL = "SokoHub <sokohubsystem@gmail.com>"
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+
 # EMAIL_HOST_USER = "sokohubsystem@gmail.com"  # Set to your verified SendGrid email
  
